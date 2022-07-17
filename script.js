@@ -103,7 +103,7 @@ function newgame(){
 
 function guess(poke){
   guesses=guesses+1
-  document.getElementById("GuessNumber").innerHTML =guesses
+  document.getElementById("GuessNumber").innerHTML ='Number of Guesses: ' + guesses
   poke=poke.toLowerCase();
   poke2=poke[0];
   poke2=poke2.toUpperCase();
