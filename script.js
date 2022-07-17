@@ -123,7 +123,7 @@ function guess(poke){
     if (648<i && i<721){
       gen2=6;
     }
-     if (720<i && i<827);{
+     if (720<i && i<827){
       gen2=7;
     }
     if (826<i){
