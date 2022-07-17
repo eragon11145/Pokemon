@@ -143,4 +143,6 @@ function hint(){
   t=('');
   t+=(pokemoN[x]);
   console.log(t[1]);
+  t=t[1]
+  document.getElementById("Hinted").innerHTML='Hint: ' + t
 }
