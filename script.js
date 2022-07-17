@@ -92,6 +92,8 @@ function newgame(){
   document.getElementById("SpecialDefense").innerHTML ='Special Defense:'+' '+sdf1
   document.getElementById("Speed").innerHTML ='Speed:'+ ' '+spd1
   document.getElementById("Total").innerHTML='Total:'+ ' '+(hp1+atk1+spa1+df1+sdf1+spd1)
+  document.getElementById("message").innerHTML=' '
+  document.getElementById("Hinted").innerHTML=' '
   
   
 }
