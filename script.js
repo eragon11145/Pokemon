@@ -100,7 +100,7 @@ function newgame(){
 function guess(poke){
   if ((' ')+poke==pokemoN[x]){
     document.getElementById("message").innerHTML='Correct! The Pokemon Was' + pokemoN[x] +'!';
-    newgame();
+    //newgame();
   }
   else{
     i=0;
