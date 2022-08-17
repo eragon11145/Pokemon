@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Speed round</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+    <a href="index.html">Casual</a>
+  </head>
+      
+    <h1>Guess the Pokemon by its Stats Speedround</h1>
+    <p>Guess as many pokemon correctly as you can in 3 minutes! After each correct guess, a new Pokemon will be generated.</p>
+  <p id='total'> </p>
+    <input type='text' id='answer'>
+<button id='guess' type='button' onclick="guess(document.getElementById('answer').value)">Go!</button>
+  <script src="competitive.js">
+    </script>
+  <body onload="count()">
+    <p id="Timer"> </p>
+      <p id="Health"> </p>
+  <p id="Attack"> </p>
+  <p id="Defense"> </p>
+  <p id="SpecialAttack"> </p>
+  <p id="SpecialDefense"> </p>
+  <p id="Speed"> </p>
+  <p id="Total"> </p>
+  <p id='message'> </p>
+    <script src="competitive.js">
+    </script>
+    <button type="button" onclick="newRound()">New Round</button>
+    <p id='Done'> </p>
+    <script src="competitive.js">
+    </script>
+  </body>
+</html>
