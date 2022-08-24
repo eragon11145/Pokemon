@@ -165,3 +165,9 @@ function hint(){
   t=t[1]
   document.getElementById("Hinted").innerHTML='Hint: ' + t
 }
+var input = document.getElementById("answer")
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+  guess(document.getElementById("answer").value)
+}
+})
