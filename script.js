@@ -104,6 +104,7 @@ function newgame(){
 function guess(poke){
   guesses=guesses+1
   document.getElementById("GuessNumber").innerHTML ="Number of Guesses: " + guesses
+  poke=poke.trim()
   poke=poke.toLowerCase();
   poke2=poke[0];
   poke2=poke2.toUpperCase();
@@ -154,8 +155,10 @@ function guess(poke){
             }    
     if (gen2==='Null'){
       document.getElementById("message").innerHTML='Try Again...Check your spelling';
+     
             }
  }
+  document.getElementById("answer").value=''
 }
 t=('');
 function hint(){
