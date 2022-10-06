@@ -85,6 +85,19 @@ function newgame(){
   spd1=(spd[x]);
   console.log(hp[x]+atk[x]+df[x]+spa[x]+sdf[x]+spd[x]);
   choosegen();
+  if (document.getElementById("Generations").value !="all"){
+    while (gen!=parseInt(document.getElementById("Generations").value)){
+      x=Math.floor(Math.random()*934)
+      hp1=(hp[x]);
+  atk1=(atk[x]);
+  df1=(df[x]);
+  spa1=(spa[x]);
+  sdf1=(sdf[x]);
+  spd1=(spd[x]);
+  console.log(hp[x]+atk[x]+df[x]+spa[x]+sdf[x]+spd[x]);
+  choosegen();
+    }
+  }
   console.log('Gen'+ ' '+(gen));
   document.getElementById("Health").innerHTML ='HP:'+ ' '+hp1
   document.getElementById("Attack").innerHTML ='Attack:'+' ' +atk1
