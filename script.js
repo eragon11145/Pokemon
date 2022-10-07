@@ -76,6 +76,7 @@ function choosegen(){
 choosegen()
 console.log('Gen'+ ' '+(gen))
 function newgame(){
+  document.getElementById("Answered").innerHTML=' '
   x=Math.floor(Math.random()*958)
   hp1=(hp[x]);
   atk1=(atk[x]);
