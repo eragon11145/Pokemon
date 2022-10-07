@@ -171,6 +171,7 @@ function guess(poke){
      
             }
  }
+
   document.getElementById("answer").value=''
 }
 t=('');
@@ -180,6 +181,9 @@ function hint(){
   console.log(t[1]);
   t=t[1]
   document.getElementById("Hinted").innerHTML='Hint: ' + t
+}
+function answer(){
+  document.getElementById("Answered").innerHTML='Answer: '+pokemoN[x]
 }
 var input = document.getElementById("answer")
 input.addEventListener("keypress", function(event) {
