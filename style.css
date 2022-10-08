@@ -58,5 +58,10 @@ p{
 .EV,.IVs{
   margin-left:0 px;
 }
-
+.HealthBar,.AttackBar,.DefenseBar,.SpecialAttackBar,.SDFBar,.SPDBar{
+    background-color: green;
+    border: 2px outset red;  
+    text-align: center;
+  
+}
 
