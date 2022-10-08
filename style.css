@@ -62,6 +62,7 @@ p{
     background-color: green;
     border: 2px outset red;  
     text-align: center;
+    visibility: false;
   
 }
 
