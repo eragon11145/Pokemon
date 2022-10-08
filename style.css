@@ -18,13 +18,12 @@ button{
   border: none;
 }
 
-/* The container <div> - needed to position the dropdown content */
+
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -34,7 +33,7 @@ button{
   z-index: 1;
 }
 
-/* Links inside the dropdown */
+
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
@@ -42,13 +41,11 @@ button{
   display: block;
 }
 
-/* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd;}
 
-/* Show the dropdown menu on hover */
+
 .dropdown:hover .dropdown-content {display: block;}
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #df3d20;}
 p{
   display: inline-block;
@@ -58,11 +55,39 @@ p{
 .EV,.IVs{
   margin-left:0 px;
 }
-.HealthBar,.AttackBar,.DefenseBar,.SpecialAttackBar,.SDFBar,.SPDBar{
+.HealthBar{
     background-color: green;
     border: 2px outset red;  
     text-align: center;
     visibility: false;
-  
-}
-
+  }
+.AttackBar{
+    background-color: orange;
+    border: 2px outset red;  
+    text-align: center;
+    visibility: false;
+  }
+.DefenseBar{
+    background-color: lightblue;
+    border: 2px outset red;  
+    text-align: center;
+    visibility: false;
+  }
+.SpecialAttackBar{
+    background-color: yellow;
+    border: 2px outset red;  
+    text-align: center;
+    visibility: false;
+  }
+.SDFBar{
+    background-color: pink;
+    border: 2px outset red;  
+    text-align: center;
+    visibility: false;
+  }
+.SPDBar{
+    background-color: teal;
+    border: 2px outset red;  
+    text-align: center;
+    visibility: false;
+  }
