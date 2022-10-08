@@ -75,7 +75,21 @@ function choosegen(){
 }
 choosegen()
 console.log('Gen'+ ' '+(gen))
+function hide(){
+ document.getElementById("HealthBar").style.visibility=false
+document.getElementById("AttackBar").style.visibility=false
+document.getElementById("DefenseBar").style.visibility=false 
+document.getElementById("SpecialAttackBar").style.visibility=false
+document.getElementById("SDFBar").style.visibility=false
+ document.getElementById("SPDBar").style.visibility=false
+}
 function newgame(){
+   document.getElementById("HealthBar").style.visibility= true
+document.getElementById("AttackBar").style.visibility=true
+document.getElementById("DefenseBar").style.visibility=true 
+document.getElementById("SpecialAttackBar").style.visibility=true
+document.getElementById("SDFBar").style.visibility=true
+ document.getElementById("SPDBar").style.visibility=true
   document.getElementById("Answered").innerHTML=' '
   x=Math.floor(Math.random()*958)
   hp1=(hp[x]);
