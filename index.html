@@ -34,7 +34,7 @@
   <input type="checkbox" id='goodness' value='good'>
 </head>
 
-<body onload="hide()">
+<body>
   <h1>Guess the Pokemon by its stats! Hit New Game to Start!</h1>
   <div class='HealthBar' id='HealthBar' style: "width:44.44%"><p id="Health"> </p></div>
   <div class='AttackBar' id='AttackBar'><p id="Attack"> </p></div>
@@ -47,7 +47,7 @@
   <p id='GuessNumber'> </p>
   <p id='Hinted'> </p>
   <script src="script.js">  
-
+    hide()
 </script>
 <button type='button' onclick="newgame()">New Game</button>
 <input type='text' id='answer'>
