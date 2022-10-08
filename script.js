@@ -126,12 +126,18 @@ function newgame(){
     }
   }
   console.log('Gen'+ ' '+(gen));
-  document.getElementById("Health").innerHTML ='HP:'+ ' '+hp1
+ document.getElementById("Health").innerHTML ='HP:'+ ' '+hp1
+  document.getElementById("HealthBar").style.width=(hp1*100/255)+"%"
   document.getElementById("Attack").innerHTML ='Attack:'+' ' +atk1
+    document.getElementById("AttackBar").style.width=(atk1*100/190)+"%"
   document.getElementById("Defense").innerHTML ='Defense:'+ ' '+df1
+      document.getElementById("DefenseBar").style.width=(df1*100/230)+"%"
   document.getElementById("SpecialAttack").innerHTML ='Special Attack:' +' '+spa1
+      document.getElementById("SpecialAttackBar").style.width=(atk1*100/194)+"%"
   document.getElementById("SpecialDefense").innerHTML ='Special Defense:'+' '+sdf1
+      document.getElementById("SDFBar").style.width=(atk1*100/230)+"%"
   document.getElementById("Speed").innerHTML ='Speed:'+ ' '+spd1
+      document.getElementById("SPDBar").style.width=(atk1*100/200)+"%"
   document.getElementById("Total").innerHTML='Total:'+ ' '+(hp1+atk1+spa1+df1+sdf1+spd1)
   document.getElementById("message").innerHTML=' '
   document.getElementById("Hinted").innerHTML=' '
