@@ -76,20 +76,20 @@ function choosegen(){
 choosegen()
 console.log('Gen'+ ' '+(gen))
 function hide(){
- document.getElementById("HealthBar").style.visibility=false
-document.getElementById("AttackBar").style.visibility=false
-document.getElementById("DefenseBar").style.visibility=false 
-document.getElementById("SpecialAttackBar").style.visibility=false
-document.getElementById("SDFBar").style.visibility=false
- document.getElementById("SPDBar").style.visibility=false
+ document.getElementById("HealthBar").style.visibility="hidden"
+document.getElementById("AttackBar").style.visibility= "hidden"
+document.getElementById("DefenseBar").style.visibility="hidden"
+document.getElementById("SpecialAttackBar").style.visibility="hidden"
+document.getElementById("SDFBar").style.visibility="hidden"
+ document.getElementById("SPDBar").style.visibility="hidden"
 }
 function newgame(){
-   document.getElementById("HealthBar").style.visibility= true
-document.getElementById("AttackBar").style.visibility=true
-document.getElementById("DefenseBar").style.visibility=true 
-document.getElementById("SpecialAttackBar").style.visibility=true
-document.getElementById("SDFBar").style.visibility=true
- document.getElementById("SPDBar").style.visibility=true
+   document.getElementById("HealthBar").style.visibility= "visible"
+document.getElementById("AttackBar").style.visibility="visible"
+document.getElementById("DefenseBar").style.visibility="visible"
+document.getElementById("SpecialAttackBar").style.visibility="visible"
+document.getElementById("SDFBar").style.visibility="visible"
+ document.getElementById("SPDBar").style.visibility="visible"
   document.getElementById("Answered").innerHTML=' '
   x=Math.floor(Math.random()*958)
   hp1=(hp[x]);
