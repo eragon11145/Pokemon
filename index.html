@@ -33,17 +33,17 @@
     <p>Only Strong Pokemon (stat total >450)?</p>
   <input type="checkbox" id='goodness' value='good'>
 </head>
-
-<body>
     <script src="script.js">  
 </script>
+<body onload="hide()">
+
   <h1>Guess the Pokemon by its stats! Hit New Game to Start!</h1>
   <div class='HealthBar' id='HealthBar' style: "width:44.44%"><p id="Health"> </p></div>
   <div class='AttackBar' id='AttackBar'><p id="Attack"> </p></div>
    <div class='DefenseBar' id='DefenseBar'> <p id="Defense"> </p></div>
    <div class='SpecialAttackBar' id='SpecialAttackBar'> <p id="SpecialAttack"> </p></div>
    <div class='SDFBar' id='SDFBar'> <p id="SpecialDefense"> </p></div>
-   <div class='SPDBar' id='SPDBar' onload="hide()"> <p id="Speed"> </p></div>
+   <div class='SPDBar' id='SPDBar' > <p id="Speed"> </p></div>
   <p id="Total"> </p>
   <p id='message'> </p>
   <p id='GuessNumber'> </p>
