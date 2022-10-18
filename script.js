@@ -1,6 +1,6 @@
 
 
-var x, y, pokemon, pokemoN, pokemoN2, hp, atk, df, spa, sdf, spd, p, i,gen, poke,poke2,hp1,atk1,df1,spa1,sdf1,spd1,gen2,t,guesses;
+var x, y, pokemon, pokemoN, pokemoN2, hp, atk, df, spa, sdf, spd, p, i,gen, poke,poke2,hp1,atk1,df1,spa1,sdf1,spd1,gen2,t,guesses,o;
 x=(Math.random())
 console.log(x)
 y=Math.random()
@@ -84,6 +84,7 @@ document.getElementById("SDFBar").style.visibility="hidden"
  document.getElementById("SPDBar").style.visibility="hidden"
 }
 function newgame(){
+  o=0
    document.getElementById("HealthBar").style.visibility= "visible"
 document.getElementById("AttackBar").style.visibility="visible"
 document.getElementById("DefenseBar").style.visibility="visible"
@@ -225,9 +226,8 @@ t=('');
 function hint(){
   t=('');
   t+=(pokemoN[x]);
-  console.log(t[1]);
-  t=t[1]
-  document.getElementById("Hinted").innerHTML='Hint: ' + t
+  document.getElementById("Hinted").innerHTML='Hint: ' + t[1+o]
+  o+=1
 }
 function answer(){
   document.getElementById("Answered").innerHTML='Answer: '+pokemoN[x]
