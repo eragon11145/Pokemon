@@ -7,6 +7,38 @@
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="gligar.ico" rel="icon" type="image/x-icon">
     <a href="index.html">Casual</a>
+    <!DOCTYPE html>
+
+  <div class="dropdown">
+  <button class="dropbtn">This Project</button>
+  <div class="dropdown-content">
+    <a href="index.html">Pokemon Stat Game</a>
+    <a href="https://eragon11145.github.io/Wordle-Answers/">Wordle Answers</a>
+    <a href="https://eragon11145.github.io/Teams/">VGC Randomizer</a>
+    <a href='calculator.html'>Stat Calculator</a>
+    <a href="reversecalculator.html">IV Calculator</a>
+  </div>
+</div>
+  <p>Generations Included:</p>
+  <select id='Generations'>
+  <option value='all'>All</option>
+  <option value='1'>Gen 1</option>
+  <option value='2'>Gen 2</option>
+  <option value='3'>Gen 3</option>
+  <option value='4'>Gen 4</option>
+    <option value='5'>Gen 5</option>
+  <option value='6'>Gen 6</option>
+  <option value='7'>Gen 7</option>
+  <option value='8'>Gen 8</option>
+
+</select>
+    <p>Only Strong Pokemon (stat total >450)?</p>
+  <input type="checkbox" id='goodness' value='good'>
+</head>
+    <script src="competitive.js">  
+</script>
+
+
   </head>
       
     <h1>Guess the Pokemon by its Stats Speedround</h1>
@@ -16,7 +48,21 @@
 <button id='guess' type='button' onclick="guess(document.getElementById('answer').value)">Go!</button>
   <script src="competitive.js">
     </script>
-  <body onload="count()">
+  <body onload="count()" onload="hide()">
+  <div class='HealthBar' id='HealthBar' style: "width:44.44%"><p id="Health"> </p></div>
+  <div class='AttackBar' id='AttackBar'><p id="Attack"> </p></div>
+   <div class='DefenseBar' id='DefenseBar'> <p id="Defense"> </p></div>
+   <div class='SpecialAttackBar' id='SpecialAttackBar'> <p id="SpecialAttack"> </p></div>
+   <div class='SDFBar' id='SDFBar'> <p id="SpecialDefense"> </p></div>
+   <div class='SPDBar' id='SPDBar' > <p id="Speed"> </p></div>
+  <p id="Total"> </p>
+  <p id='message'> </p>
+  <p id='GuessNumber'> </p>
+  <p id='Hinted'> </p>
+  <script src="script.js">  
+
+</script>
+
     <p id="Timer"> </p>
       <p id="Health"> </p>
   <p id="Attack"> </p>
