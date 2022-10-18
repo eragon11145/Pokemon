@@ -226,7 +226,10 @@ t=('');
 function hint(){
   t=('');
   t+=(pokemoN[x]);
-  document.getElementById("Hinted").innerHTML='Hint: ' + t[1+o]
+  if (o==0){
+  document.getElementById("Hinted").innerHTML='Hint: '  
+  }
+  document.getElementById("Hinted").innerHTML+= t[1+o]
   o+=1
 }
 function answer(){
