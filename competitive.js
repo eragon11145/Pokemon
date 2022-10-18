@@ -199,7 +199,6 @@ function guess(poke){
       document.getElementById("message").innerHTML='Try Again...Check Your Spelling';
     }
  }
-}
 function newRound(){
   total=0;
   newgame()
