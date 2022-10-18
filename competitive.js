@@ -66,14 +66,7 @@ function choosegen(){
 }
 choosegen()
 console.log('Gen'+ ' '+(gen))
-function hide(){
- document.getElementById("HealthBar").style.visibility="hidden"
-document.getElementById("AttackBar").style.visibility= "hidden"
-document.getElementById("DefenseBar").style.visibility="hidden"
-document.getElementById("SpecialAttackBar").style.visibility="hidden"
-document.getElementById("SDFBar").style.visibility="hidden"
- document.getElementById("SPDBar").style.visibility="hidden"
-}
+
 function newgame(){
    document.getElementById("HealthBar").style.visibility= "visible"
 document.getElementById("AttackBar").style.visibility="visible"
@@ -242,6 +235,15 @@ function sendScore(){
   if ((total > localStorage.getItem("number1")) ||(localStorage.getItem("number1")==undefined)){
     localStorage.setItem("number1", document.getElementById("username").value + ' '+ total)
   }
+}
+function hide(){
+ document.getElementById("HealthBar").style.visibility="hidden"
+document.getElementById("AttackBar").style.visibility= "hidden"
+document.getElementById("DefenseBar").style.visibility="hidden"
+document.getElementById("SpecialAttackBar").style.visibility="hidden"
+document.getElementById("SDFBar").style.visibility="hidden"
+ document.getElementById("SPDBar").style.visibility="hidden"
+ count()
 }
 var input = document.getElementById("answer")
 input.addEventListener("keypress", function(event) {
