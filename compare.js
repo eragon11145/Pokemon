@@ -48,49 +48,49 @@ console.log(spd[x]);
 console.log(hp[x]+atk[x]+df[x]+spa[x]+sdf[x]+spd[x]);
 gen=0;
 function choosegen(){
-  if (x<151){
+  if (x<166){
     gen=1
   }
-  else if (x<251){
+  else if (x<266){
     gen=2;
   }
-  else if (x<386){
+  else if (x<401){
     gen=3;
   }  
-  else if (x<494){
+  else if (x<509){
     gen=4;
   }  
-  else if (x<649){
+  else if (x<664){
     gen=5;
   }  
-  else if (x<721){
+  else if (x<736){
     gen=6;
   }
-  else if (x<827){
+  else if (x<842){
     gen=7;
   }
   else{
     gen=8;
   }
-  if (y<151){
+  if (y<166){
     gen2=1
   }
-  else if (y<251){
+  else if (y<266){
     gen2=2;
   }
-  else if (y<386){
+  else if (y<401){
     gen2=3;
   }  
-  else if (y<494){
+  else if (y<509){
     gen2=4;
   }  
-  else if (y<649){
+  else if (y<664){
     gen2=5;
   }  
-  else if (y<721){
+  else if (y<736){
     gen2=6;
   }
-  else if (y<827){
+  else if (y<842){
     gen2=7;
   }
   else{
