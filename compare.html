@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+    <div class="dropdown">
+  <button class="dropbtn">This Project</button>
+  <div class="dropdown-content">
+    <a href="index.html">Pokemon Stat Game</a>
+    <a href="https://eragon11145.github.io/Wordle-Answers/">Wordle Answers</a>
+    <a href="https://eragon11145.github.io/Teams/">VGC Randomizer</a>
+    <a href='calculator.html'>Stat Calculator</a>
+    <a href="reversecalculator.html">IV Calculator</a>
+  </div>
+</div>
+  <p class='option1'>Generations Included:</p>
+  <select id='Generations'>
+  <option value='all'>All</option>
+  <option value='1'>Gen 1</option>
+  <option value='2'>Gen 2</option>
+  <option value='3'>Gen 3</option>
+  <option value='4'>Gen 4</option>
+    <option value='5'>Gen 5</option>
+  <option value='6'>Gen 6</option>
+  <option value='7'>Gen 7</option>
+  <option value='8'>Gen 8</option>
+
+</select>
+  <p class='option2'>Only Good Mons?</p>
+  <input type="checkbox" id='goodness' value='good'>
+</head>
+<body>
+  <h1 id='Question'></h1>
+  <div class='guess' id='guess'><button  class='option' id='option1' onclick='guess1()'></button>
+  <button class='option' id='option2' onclick='guess2()'></button>
+  <button  class='option' id='option3' onclick='guess3()'>They're the same</button></div>
+  <p id='feedback'></p>
+  <p id='sCore'></p>
+  <script src='compare.js'>
+  </script>
+  <button onclick='newgame()'>New Game</button>
+</body>
