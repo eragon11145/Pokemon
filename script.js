@@ -180,7 +180,7 @@ function guess(poke){
   }
   else{
     i=0;
-    while ((pokemoN[i]!=((' ') + poke)) && (i<960)){
+    while ((pokemoN[i]!=((' ') + poke)) && (i<1073)){
       i+=1;
     }
     if (i<166){
