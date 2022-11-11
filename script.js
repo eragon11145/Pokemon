@@ -73,7 +73,7 @@ function choosegen(){
       gen=8;
     }
   else{
-    gen=8;
+    gen=9;
   }
 }
 choosegen()
