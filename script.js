@@ -69,7 +69,7 @@ function choosegen(){
   else if (x<842){
     gen=7;
   }    
-  if ((841<x) && (x<958)){
+  else if ((841<x) && (x<958)){
       gen=8;
     }
   else{
