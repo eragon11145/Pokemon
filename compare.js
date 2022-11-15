@@ -114,6 +114,9 @@ function newgame(){
     roundActive=true
       document.getElementById('sCore').innerHTML=''}
   z=Math.floor(6*Math.random())
+ if (document.getElementById("stats").value != "all"){
+  z=document.getElementById("stats").value
+ }
   x=Math.floor(Math.random()*1071)
   y=Math.floor(Math.random()*1071)
   document.getElementById("Question").innerHTML='Which Pokemon has higher ' + staTs[z]+'?'
