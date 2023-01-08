@@ -71,7 +71,7 @@ if ((document.getElementById("Nature").value==("Lonely"))||(document.getElementB
 df2=Math.ceil(df2-5)
 df2*=100
 df2=df2/parseInt(document.getElementById("Level").value)
-df2=(df2-Math.floor(.25*parseInt(document.getElementById("Defense1").value))-(2*df1))
+df2=Math.ceil(df2-Math.floor(.25*parseInt(document.getElementById("Defense1").value))-(2*df1))
 spa2=(parseInt(document.getElementById("SpecialAttack2").value))
 if ((document.getElementById("Nature").value==("Modest"))||(document.getElementById("Nature").value=="Mild")||(document.getElementById("Nature").value=="Rash")||(document.getElementById("Nature").value=="Quiet")){
   spa2=Math.ceil(spa2/1.1)
