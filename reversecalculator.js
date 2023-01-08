@@ -50,10 +50,10 @@ hp1=(hp[i]);
   hp2-=Math.floor((parseInt(document.getElementById("Health1").value))/4)
   
 atk2=(parseInt(document.getElementById("Attack2").value))
-if ((document.getElementById("Nature").value==("Modest"))||(document.getElementById("Nature").value=="Quiet")||(document.getElementById("Nature").value=="Mild")||(document.getElementById("Nature").value=="Rash")){
-  spa2=Math.ceil(spa2/1.1)
+if ((document.getElementById("Nature").value==("Adamant"))||(document.getElementById("Nature").value=="Lonely")||(document.getElementById("Nature").value=="Naughty")||(document.getElementById("Nature").value=="Brave")){
+  atk2=Math.ceil(atk2/1.1)
 }
-if ((document.getElementById("Nature").value==("Adamant"))||(document.getElementById("Nature").value=="Jolly")||(document.getElementById("Nature").value=="Impish")||(document.getElementById("Nature").value=="")){
+if ((document.getElementById("Nature").value==("Modest"))||(document.getElementById("Nature").value=="Bold")||(document.getElementById("Nature").value=="Calm")||(document.getElementById("Nature").value=="Timid")){
   atk2=Math.ceil(atk2/.9)
 }
 atk2=Math.ceil(atk2)
