@@ -206,7 +206,7 @@ function guess1(){
 
   }  
 else{
-  document.getElementById('feedback').innerHTML='Incorrect, your final score was:'
+  document.getElementById('feedback').innerHTML='Incorrect, ' + pokemoN[x] +"'s " + staTs[z] + ' is' + statS[z][x] + ',and ' + pokemoN[y] +"'s " + staTs[z] + ' is' + statS[z][y] + '. Your final score was:'
       document.getElementById('sCore').innerHTML=score
   roundActive=false
   document.getElementById('guess').style.visibility='hidden'
@@ -220,7 +220,7 @@ function guess2(){
 
   }  
 else{
-  document.getElementById('feedback').innerHTML='Incorrect, your final score was:'
+  document.getElementById('feedback').innerHTML='Incorrect, ' + pokemoN[x] +"'s " + staTs[z] + ' is' + statS[z][x] + ',and ' + pokemoN[y] +"'s " + staTs[z] + ' is' + statS[z][y] + '. Your final score was:'
       document.getElementById('sCore').innerHTML=score
   roundActive=false
   document.getElementById('guess').style.visibility='hidden'
@@ -234,7 +234,7 @@ function guess3(){
 
   }  
 else{
-  document.getElementById('feedback').innerHTML='Incorrect, your final score was:'
+  document.getElementById('feedback').innerHTML='Incorrect, ' + pokemoN[x] +"'s " + staTs[z] + ' is' + statS[z][x] + ',and ' + pokemoN[y] +"'s " + staTs[z] + ' is' + statS[z][y] + '. Your final score was:'
       document.getElementById('sCore').innerHTML=score
   roundActive=false
   document.getElementById('guess').style.visibility='hidden'
