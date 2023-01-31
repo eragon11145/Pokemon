@@ -112,6 +112,7 @@ function newgame(){
   if (roundActive==false){
     score=0
     roundActive=true
+   document.getElementById('feedback').innerHTML=''
       document.getElementById('sCore').innerHTML=''}
   z=Math.floor(6*Math.random())
  if (document.getElementById("stats").value != "all"){
