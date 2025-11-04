@@ -57,7 +57,7 @@ function choosegen(){
   else if (x<401){
     gen=3;
   }  
-  else if (x<509){
+  else if (x<508){
     gen=4;
   }  
   else if (x<664){
