@@ -88,7 +88,7 @@ function newgame(){
   document.getElementById("Question").innerHTML='Name a Pokemon with a ' + staTs[z]+' stat of ' + number + '.'
 document.getElementById("HealthBar").style.visibility= "visible"
 document.getElementById("Answered").innerHTML=' '
-  answers=()
+  answers=('')
 while (o < 1086){
   if (statS[z][o]==number){
   answers+=pokemoN[o]
