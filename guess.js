@@ -99,7 +99,7 @@ while (o < 1086){
   console.log(answers)
 
   console.log('Gen'+ ' '+(gen));
- document.getElementById("Health").innerHTML =staT[z]+':'+ ' '+number
+ document.getElementById("Health").innerHTML =staTs[z]+':'+ ' '+number
   document.getElementById("HealthBar").style.width=(number*50/200)+"%"
   document.getElementById("message").innerHTML=' '
   document.getElementById("Hinted").innerHTML=' '
@@ -116,11 +116,13 @@ function guess(poke){
   poke2=poke2.toUpperCase();
   poke=poke.slice(1);
   poke=poke2+poke
-    while ((pokemoN[i]!=((' ') + poke)) && (i<1073)){
+  console.log(poke)
+    while ((pokemoN[i]!=((' ') + poke)) && (i<1086)){
       i+=1;
+      console.log(pokemoN[i])
     }
     if (statS[z][i]==number){
-          document.getElementById("message").innerHTML='Correct!' + poke + 'has the correct ' + staT[z]+'!';
+          document.getElementById("message").innerHTML='Correct!' + poke + 'has the correct ' + staTs[z]+'!';
     }
   else{
           document.getElementById("message").innerHTML='Incorrect, this is not a match :(';
