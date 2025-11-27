@@ -119,7 +119,7 @@ function guess(poke){
       i+=1;
     }
     if (statS[z][i]==number){
-          document.getElementById("message").innerHTML='Correct!' poke + 'has the correct ' + staT[z]+'!';
+          document.getElementById("message").innerHTML='Correct!' + poke + 'has the correct ' + staT[z]+'!';
     }
   else{
           document.getElementById("message").innerHTML='Incorrect, this is not a match :(';
