@@ -98,7 +98,7 @@ while (o < 1086){
   console.log(answers)
 
   console.log('Gen'+ ' '+(gen));
- document.getElementById("Health").innerHTML =staT[z]':'+ ' '+number
+ document.getElementById("Health").innerHTML =staT[z]+':'+ ' '+number
   document.getElementById("HealthBar").style.width=(number*50/200)+"%"
   document.getElementById("message").innerHTML=' '
   document.getElementById("Hinted").innerHTML=' '
