@@ -89,6 +89,10 @@ function newgame(){
   z=document.getElementById("stats").value
  }
   number = 50 + Math.floor(Math.random()*100)
+   if (document.getElementById("goodness").checked){
+    while (number<100){
+        number = 50 + Math.floor(Math.random()*100)
+    }
   document.getElementById("Question").innerHTML='Name a Pokemon with a ' + staTs[z]+' stat of ' + number + '.'
 document.getElementById("HealthBar").style.visibility= "visible"
 document.getElementById("Answered").innerHTML=' '
