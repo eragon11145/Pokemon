@@ -1,4 +1,4 @@
-var x, y, number,pokemon, pokemoN, pokemoN2, hp, atk, df, spa, sdf, spd, p, i,gen, poke,hp1,atk1,df1,spa1,sdf1,spd1,gen2,poke2,statS,staTs,z,score,roundActive,answers;
+var x, y, number,pokemon, generations,pokemoN, pokemoN2, hp, atk, df, spa, sdf, spd, p, i,gen, poke,hp1,atk1,df1,spa1,sdf1,spd1,gen2,poke2,statS,staTs,z,score,roundActive,answers;
 x=(Math.random())
 console.log('hi')
 console.log(x)
@@ -46,36 +46,35 @@ console.log(sdf[x]);
 console.log(spd[x]);
 console.log(hp[x]+atk[x]+df[x]+spa[x]+sdf[x]+spd[x]);
 gen=0;
-function choosegen(){
-  if (x<166){
+function choosegen(a){
+  if (a<166){
     gen=1
   }
-  else if (x<266){
+  else if (a<266){
     gen=2;
   }
-  else if (x<401){
+  else if (a<401){
     gen=3;
   }  
-  else if (x<508){
+  else if (a<508){
     gen=4;
   }  
-  else if (x<664){
+  else if (a<664){
     gen=5;
   }  
-  else if (x<736){
+  else if (a<736){
     gen=6;
   }
-  else if (x<842){
+  else if (a<842){
     gen=7;
   }    
-  else if ((841<x) && (x<958)){
+  else if ((841<a) && (a<958)){
       gen=8;
     }
   else{
     gen=9;
   }
 }
-choosegen()
 console.log('Gen'+ ' '+(gen))
 function hide(){
  document.getElementById("HealthBar").style.visibility="hidden"
@@ -84,6 +83,7 @@ statS=[hp,atk,df,spa,sdf,spd]
 staTs=['HP', 'Attack','Defense','Special Attack','Special Defense','Speed' ]
 function newgame(){
   o=0
+  generations=('')
   z=Math.floor(6*Math.random())
   if (document.getElementById("stats").value != "all"){
   z=document.getElementById("stats").value
@@ -101,6 +101,8 @@ document.getElementById("Answered").innerHTML=' '
 while (o < 1086){
   if (statS[z][o]==number){
   answers+=pokemoN[o]
+  choosegen(o)
+  generations+=('Gen '+gen+' ')
   }
   o+=1
 }
@@ -148,10 +150,14 @@ if (answers==('')){
   document.getElementById("message").innerHTML='Incorrect, there is a solution...';
   }
 }
+function hint(){
+  document.getElementById("Hinted").innerHTML='Hint: '+ generations  
+}
 
 function answer(){
   document.getElementById("Answered").innerHTML='Answer: '+answers
 }
+
 var input = document.getElementById("answer")
 input.addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
