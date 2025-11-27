@@ -108,6 +108,7 @@ while (o < 1086){
 }
 
 function guess(poke){
+  i=0
   guesses=guesses+1
   document.getElementById("GuessNumber").innerHTML ="Number of Guesses: " + guesses
   poke=poke.trim()
