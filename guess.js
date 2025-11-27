@@ -1,5 +1,6 @@
 var x, y, number,pokemon, pokemoN, pokemoN2, hp, atk, df, spa, sdf, spd, p, i,gen, poke,hp1,atk1,df1,spa1,sdf1,spd1,gen2,poke2,statS,staTs,z,score,roundActive,answers;
 x=(Math.random())
+console.log('hi')
 console.log(x)
 y=Math.random()
 guesses=0
