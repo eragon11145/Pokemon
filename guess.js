@@ -85,6 +85,9 @@ staTs=['HP', 'Attack','Defense','Special Attack','Special Defense','Speed' ]
 function newgame(){
   o=0
   z=Math.floor(6*Math.random())
+  if (document.getElementById("stats").value != "all"){
+  z=document.getElementById("stats").value
+ }
   number = 50 + Math.floor(Math.random()*100)
   document.getElementById("Question").innerHTML='Name a Pokemon with a ' + staTs[z]+' stat of ' + number + '.'
 document.getElementById("HealthBar").style.visibility= "visible"
@@ -123,14 +126,23 @@ function guess(poke){
       console.log(pokemoN[i])
     }
     if (statS[z][i]==number){
-          document.getElementById("message").innerHTML='Correct!' + poke + 'has the correct ' + staTs[z]+'!';
+          document.getElementById("message").innerHTML='Correct!' + poke + ' has the correct ' + staTs[z]+'!';
     }
   else{
-          document.getElementById("message").innerHTML='Incorrect, this is not a match :(';
+          document.getElementById("message").innerHTML='Incorrect, '+ poke + ' is not a match :(';
   }
     document.getElementById("answer").value=''
  }
 
+function nomatch(){
+  guesses+=1
+if (answers==('')){
+          document.getElementById("message").innerHTML='Correct! There was no valid match!';
+}
+  else{
+  document.getElementById("message").innerHTML='Incorrect, there is a solution...';
+  }
+}
 
 function answer(){
   document.getElementById("Answered").innerHTML='Answer: '+answers
