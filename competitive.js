@@ -147,11 +147,11 @@ document.getElementById("SDFBar").style.visibility="visible"
 }
 function guess(poke){
   poke=poke.toLowerCase();
+  poke=poke.trim()
   poke2=poke[0]
-  poke2=poke2.toUpperCase()
   poke=poke.slice(1)
   poke=poke2+poke
-  if ((' ')+poke==pokemoN[x]){
+  if ((' ')+poke==pokemoN[x].toLowerCase()){
     document.getElementById("message").innerHTML='Correct! The Pokemon Was' + pokemoN[x] +'!';
     newgame();
     total+=1;
@@ -159,7 +159,7 @@ function guess(poke){
   }
   else{
     i=0;
-    while ((pokemoN[i]!=((' ') + poke)) && i<960) {
+    while (((pokemoN[i].toLowerCase())!=((' ') + poke)) && i<960) {
       i+=1;
     }
 }
