@@ -234,8 +234,10 @@ function hint(){
   if (o==0){
   document.getElementById("Hinted").innerHTML='Hint: '  
   }
+  if ((t[1+o])!=Undefined){
   document.getElementById("Hinted").innerHTML+= t[1+o]
   o+=1
+  }
 }
 function answer(){
   document.getElementById("Answered").innerHTML='Answer: '+pokemoN[x]
