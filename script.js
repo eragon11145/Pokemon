@@ -234,7 +234,7 @@ function hint(){
   if (o==0){
   document.getElementById("Hinted").innerHTML='Hint: '  
   }
-  if ((t[1+o])!=Undefined){
+  if ((t[1+o])!=undefined){
   document.getElementById("Hinted").innerHTML+= t[1+o]
   o+=1
   }
