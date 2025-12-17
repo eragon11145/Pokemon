@@ -209,7 +209,7 @@ function guess(poke){
     if (957<i){
       gen2=9;
     }
-    if (i===1073){
+    if (i===1086){
       gen2='Null';
     }
     choosegen()
