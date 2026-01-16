@@ -179,7 +179,7 @@ function guess(poke){
   }
   else{
     i=0;
-    while (((pokemoN[i].toLowerCase())!=((' ') + poke)) && (i<1086)){
+    while (((pokemoN[i].toLowerCase())!=((' ') + poke)) && (i<1089)){
       i+=1;
     }
     if (i<166){
@@ -209,7 +209,7 @@ function guess(poke){
     if (957<i){
       gen2=9;
     }
-    if (i===1086){
+    if (i===1089){
       gen2='Null';
     }
     choosegen()
