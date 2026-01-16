@@ -38,7 +38,7 @@ function stats(poke){
   console.log(hp[i]+atk[i]+df[i]+spa[i]+sdf[i]+spd[i]);
   }
 }
-x=Math.floor(Math.random()*1086);
+x=Math.floor(Math.random()*((pokemoN2.length)-1));
 console.log(hp[x]);
 console.log(atk[x]);
 console.log(df[x]);
@@ -95,7 +95,7 @@ document.getElementById("SpecialAttackBar").style.visibility="visible"
 document.getElementById("SDFBar").style.visibility="visible"
  document.getElementById("SPDBar").style.visibility="visible"
   document.getElementById("Answered").innerHTML=' '
-  x=Math.floor(Math.random()*1086)
+  x=Math.floor(Math.random()*((pokemoN2.length)-1))
   hp1=(hp[x]);
   atk1=(atk[x]);
   df1=(df[x]);
@@ -106,7 +106,7 @@ document.getElementById("SDFBar").style.visibility="visible"
   choosegen();
   if (document.getElementById("Generations").value !="all"){
     while (gen!=parseInt(document.getElementById("Generations").value)){
-      x=Math.floor(Math.random()*1086)
+      x=Math.floor(Math.random()*((pokemoN2.length)-1))
       hp1=(hp[x]);
   atk1=(atk[x]);
   df1=(df[x]);
@@ -119,7 +119,7 @@ document.getElementById("SDFBar").style.visibility="visible"
   }
   if (document.getElementById("goodness").checked){
     while ((hp[x]+atk[x]+df[x]+spa[x]+sdf[x]+spd[x])<450){
-      x=Math.floor(Math.random()*1086)
+      x=Math.floor(Math.random()*((pokemoN2.length)-1))
   hp1=(hp[x]);
   atk1=(atk[x]);
   df1=(df[x]);
@@ -130,7 +130,7 @@ document.getElementById("SDFBar").style.visibility="visible"
   choosegen();
   if (document.getElementById("Generations").value !="all"){
     while (gen!=parseInt(document.getElementById("Generations").value)){
-      x=Math.floor(Math.random()*1086)
+      x=Math.floor(Math.random()*((pokemoN2.length)-1))
       hp1=(hp[x]);
   atk1=(atk[x]);
   df1=(df[x]);
@@ -179,7 +179,7 @@ function guess(poke){
   }
   else{
     i=0;
-    while (((pokemoN[i].toLowerCase())!=((' ') + poke)) && (i<1089)){
+    while (((pokemoN[i].toLowerCase())!=((' ') + poke)) && (i<((pokemoN2.length)-1))){
       i+=1;
     }
     if (i<166){
@@ -209,7 +209,7 @@ function guess(poke){
     if (957<i){
       gen2=9;
     }
-    if (i===1089){
+    if (i===((pokemoN2.length)-1)){
       gen2='Null';
     }
     choosegen()
