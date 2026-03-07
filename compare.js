@@ -206,6 +206,10 @@ function guess1(){
     score +=1
 
   }  
+else if  ((statS[z][x]==statS[z][y]) && (document.getElementById("kindness").checked)) {
+    document.getElementById("feedback").innerHTML='Correct, they\'re the same and we\'re being nice. Next Question'
+        newgame();
+}
 else{
   document.getElementById('feedback').innerHTML='Incorrect, ' + pokemoN[x] +"'s " + staTs[z] + ' is' + statS[z][x] + ',and ' + pokemoN[y] +"'s " + staTs[z] + ' is ' + statS[z][y] + '. Your final score was:'
       document.getElementById('sCore').innerHTML=score
@@ -219,7 +223,11 @@ function guess2(){
         newgame();
     score +=1
 
-  }  
+  }
+else if  ((statS[z][x]==statS[z][y]) && (document.getElementById("kindness").checked)) {
+    document.getElementById("feedback").innerHTML='Correct, they\'re the same and we\'re being nice. Next Question'
+        newgame();
+}
 else{
   document.getElementById('feedback').innerHTML='Incorrect, ' + pokemoN[x] +"'s " + staTs[z] + ' is' + statS[z][x] + ',and ' + pokemoN[y] +"'s " + staTs[z] + ' is ' + statS[z][y] + '. Your final score was:'
       document.getElementById('sCore').innerHTML=score
