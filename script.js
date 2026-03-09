@@ -224,7 +224,7 @@ function guess(poke){
      
             }
     if (hp[x]==hp[i] && atk[x]==atk[i] && sdf[x]==sdf[i] && spa[x]==spa[i] && spd[x]==spd[i] && df[x]==df[i]){
-      document.getElementById("message").innerHTML='Correct! The intended Pokmeon was ' + pokemoN[x] +', but ' + pokemon[i] + 'also has the same stats!';
+      document.getElementById("message").innerHTML='Correct! The intended Pokemon was ' + pokemoN[x] +', but ' + pokemoN[i] + ' also has the same stats!';
     }
  }
 
