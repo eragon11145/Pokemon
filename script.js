@@ -223,7 +223,7 @@ function guess(poke){
       document.getElementById("message").innerHTML='Try Again...Check your spelling';
      
             }
-    if (hp[x]==hp[i] && atk[x]==atk[i] && sdf[x]==sdf[i] && spa[x]==hp[i] && spd[x]==hp[i] && df[x]==df[i]){
+    if (hp[x]==hp[i] && atk[x]==atk[i] && sdf[x]==sdf[i] && spa[x]==spa[i] && spd[x]==spd[i] && df[x]==df[i]){
       document.getElementById("message").innerHTML='Correct! The intended Pokmeon was ' + pokemoN[x] +', but ' + pokemon[i] + 'also has the same stats!';
     }
  }
