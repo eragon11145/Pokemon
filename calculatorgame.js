@@ -138,7 +138,7 @@ function generateMonOne() {
   console.log(spaiv)
   console.log(spaev)
   console.log(spa2)
-  document.getElementById('Attacker').innerHTML = pokemoN[y] + ' Raw Attack ' + atk2 + ', ' + atkiv + ', ' + atkev + '. Raw Special Attack ' + spa2 + ', ' + spaiv + ', ' + spaev + '.'
+  document.getElementById('Attacker').innerHTML = pokemoN[y] + ' Raw Attack ' + atk2 + '. Raw Special Attack ' + spa2 + '.'
 }
 
 
@@ -176,7 +176,7 @@ function generateMonTwo() {
   console.log(sdfiv)
   console.log(sdfev)
   console.log(sdf2)
-  document.getElementById('Defender').innerHTML = pokemoN[x] + ' Raw HP ' + hp2 + ', ' + hpiv + ', ' + hpev + ' Raw Defense ' + df2 + ', ' + dfiv + ', ' + dfev + '. Raw Special Defense ' + sdf2 + ', ' + sdfiv + ', ' + sdfev + '.'
+  document.getElementById('Defender').innerHTML = pokemoN[x] + ' Raw HP ' + hp2 +  '. Raw Defense ' + df2 + '. Raw Special Defense ' + sdf2 + '.'
 }
 function gettypematchup(movetype,type1,type2){
   theTypes = ["Normal","Fire","Water","Grass","Electric","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy"]
@@ -225,8 +225,13 @@ function generateCalc() {
   Upper = Upper / hp2 * 100
   console.log(Lower)
   console.log(Upper)
-  document.getElementById('Damagee').innerHTML = 'The damage taken by a ' + pokemoN[x] + ' from a ' + atkiv + ' iv ' + atkev + ' attack ' + pokemoN[y] + ' ' + moveNames[z] + ' is between ' + Lower + '% and ' + Upper + '%.'
+  document.getElementById('Damagee').innerHTML = 'What is the damage taken by a ' + hpev + ' HP ' + hpiv + ' IVs / ' + dfev + ' Def ' + dfiv + ' IVs ' + pokemoN[x] + ' from a ' + atkiv + ' iv ' + atkev + ' Attack ' + pokemoN[y] + ' ' + moveNames[z] + ' ?'
+  if (moveCategories[z] == 'Special') {
+document.getElementById('Damagee').innerHTML = 'What is the damage taken by a ' + hpev + ' HP ' + hpiv + ' IVs / ' + sdfev + ' SpDef ' + sdfiv + ' IVs ' + pokemoN[x] + ' from a ' + spaiv + ' iv ' + spaev + ' Special Attack ' + pokemoN[y] + ' ' + moveNames[z] + '?'
+  }
+
 }
+
 
 
 generateCalc()
