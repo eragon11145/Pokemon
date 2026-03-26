@@ -229,6 +229,8 @@ function gettypematchup(movetype,type1,type2){
 
 function generateCalc() {
   guesses=0
+  document.getElementById("Answered").innerHTML=' '
+  document.getElementById("message").innerHTML=' '
   z = Math.floor(498 * Math.random())
   power = movePowers[z]
   generateMonOne()
@@ -273,8 +275,8 @@ generateCalc()
 function guess(damage){
   guesses=guesses+1
   document.getElementById("GuessNumber").innerHTML ="Number of Guesses: " + guesses
-  if ((damage > Lower) && (damage < Upper)){
-    document.getElementById("message").innerHTML='Correct! The damage range was between ' + Lower + ' and ' + Upper +'!';
+  if ((damage > Lower - 0.7) && (damage < Upper + 0.7)){
+    document.getElementById("message").innerHTML='Correct! The damage range was between ' + Lower.toFixed(2) + ' and ' + Upper.toFixed(2) +'!';
     //newgame();
   }
   else{
@@ -283,7 +285,7 @@ function guess(damage){
   document.getElementById("answer").value=''
 }
 function answer(){
-  document.getElementById("Answered").innerHTML='Answer: '+ Lower +'%' + ' to ' + Upper + '%'
+  document.getElementById("Answered").innerHTML='Answer: '+ Lower.toFixed(2) +'%' + ' to ' + Upper.toFixed(2) + '%'
 }
 var input = document.getElementById("answer")
 input.addEventListener("keypress", function(event) {
