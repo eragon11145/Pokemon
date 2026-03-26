@@ -256,9 +256,9 @@ function generateCalc() {
 document.getElementById('Damagee').innerHTML = 'What is the damage taken by a' + hpev + ' HP ' + ' / ' + sdfev + ' SpDef ' + pokemoN[x] + ' from a '  + spaev + ' Special Attack ' + pokemoN[y] + ' ' + moveNames[z] + ' ?'
   }
     if (document.getElementById("chaos").checked){
-  document.getElementById('Damagee').innerHTML = 'What is the damage taken by a Level ' + level1 + ' ' hpev + ' HP ' + hpiv + ' IVs / ' + dfev + ' Def ' + dfiv + ' IVs ' + pokemoN[x] + ' from a Level ' + level2 + ' ' + atkiv + ' iv ' + atkev + ' Attack ' + pokemoN[y] + ' ' + moveNames[z] + ' ?'
+  document.getElementById('Damagee').innerHTML = 'What is the damage taken by a Level ' + level1 + ' ' +  hpev + ' HP ' + hpiv + ' IVs / ' + dfev + ' Def ' + dfiv + ' IVs ' + pokemoN[x] + ' from a Level ' + level2 + ' ' + atkiv + ' iv ' + atkev + ' Attack ' + pokemoN[y] + ' ' + moveNames[z] + ' ?'
   if (moveCategories[z] == 'Special') {
-document.getElementById('Damagee').innerHTML = 'What is the damage taken by a Level ' + level1 + ' ' hpev + ' HP ' + hpiv + ' IVs / ' + sdfev + ' SpDef ' + sdfiv + ' IVs ' + pokemoN[x] + ' from a Level ' + level2 + ' ' + spaiv + ' iv ' + spaev + ' Special Attack ' + pokemoN[y] + ' ' + moveNames[z] + '?'
+document.getElementById('Damagee').innerHTML = 'What is the damage taken by a Level ' + level1 + ' ' + hpev + ' HP ' + hpiv + ' IVs / ' + sdfev + ' SpDef ' + sdfiv + ' IVs ' + pokemoN[x] + ' from a Level ' + level2 + ' ' + spaiv + ' iv ' + spaev + ' Special Attack ' + pokemoN[y] + ' ' + moveNames[z] + '?'
   }
   }
   
