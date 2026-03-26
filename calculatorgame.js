@@ -162,6 +162,7 @@ function generateMonTwo() {
     while ((hp[x]+atk[x]+df[x]+spa[x]+sdf[x]+spd[x])<450){
       x=Math.floor(Math.random()*((pokemoN2.length)-1))
     }
+  }
   level2 = 100
   console.log(x);
   console.log(pokemoN[x])
