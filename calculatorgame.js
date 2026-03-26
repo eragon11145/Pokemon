@@ -121,15 +121,26 @@ moveCategories = ["Physical","Physical","Special","Physical","Special","Physical
 function generateMonOne() {
   y = (Math.random());
   y = Math.floor(y * 1071);
+  if (document.getElementById("goodness").checked){
+    while ((hp[y]+atk[y]+df[y]+spa[y]+sdf[y]+spd[y])<450){
+      y=Math.floor(Math.random()*((pokemoN2.length)-1))
+    }
   level1 = 100
   console.log(y);
   console.log(pokemoN[y])
+  atkiv  = 31
+  spaiv = 31
+  atkev =252
+  spaev =252
+  if (document.getElementById("chaos").checked){
+  level1 = Math.floor(100 * Math.random())
   atkiv = Math.floor(31 * Math.random())
   spaiv = Math.floor(31 * Math.random())
   atkev = Math.floor(252 * Math.random())
   spaev = Math.floor(252 * Math.random())
   console.log(atkiv)
   console.log(atkev)
+  }
   atk2 = (Math.floor(0.01 * (2 * atk[y] + atkiv + Math.floor(0.25 * atkev)) * level1) + 5)
   console.log(atkiv)
   console.log(atkev)
@@ -147,9 +158,21 @@ function generateMonOne() {
 function generateMonTwo() {
   x = (Math.random());
   x = Math.floor(x * 1071);
+  if (document.getElementById("goodness").checked){
+    while ((hp[x]+atk[x]+df[x]+spa[x]+sdf[x]+spd[x])<450){
+      x=Math.floor(Math.random()*((pokemoN2.length)-1))
+    }
   level2 = 100
   console.log(x);
   console.log(pokemoN[x])
+  hpiv = 31
+  dfiv = 31
+  sdfiv = 31
+  hpev = 0
+  dfev = 0
+  sdfev = 0
+   if (document.getElementById("chaos").checked){
+  level2 = Math.floor(100 * Math.random())
   hpiv = Math.floor(31 * Math.random())
   //atkiv=Math.floor(31*Math.random())
   dfiv = Math.floor(31 * Math.random())
@@ -164,6 +187,7 @@ function generateMonTwo() {
   //spdev=Math.floor(252*Math.random())
   console.log(hpiv)
   console.log(hpev)
+   }
   hp2 = Math.floor((0.01 * (2 * hp[x] + hpiv + Math.floor(0.25 * hpev))) * level2) + level2 + 10;
   console.log(hp2)
   //atk2= (Math.floor(0.01 * (2 * atk1 + parseInt(document.getElementById("Attack2").value) + Math.floor(0.25 * parseInt(document.getElementById("Attack1").value))) * parseInt(document.getElementById("Level").value)) + 5)
@@ -202,6 +226,7 @@ function gettypematchup(movetype,type1,type2){
 }
 
 function generateCalc() {
+  guesses=0
   z = Math.floor(498 * Math.random())
   power = movePowers[z]
   generateMonOne()
@@ -225,11 +250,18 @@ function generateCalc() {
   Upper = Upper / hp2 * 100
   console.log(Lower)
   console.log(Upper)
-  document.getElementById('Damagee').innerHTML = 'What is the damage taken by a ' + hpev + ' HP ' + hpiv + ' IVs / ' + dfev + ' Def ' + dfiv + ' IVs ' + pokemoN[x] + ' from a ' + atkiv + ' iv ' + atkev + ' Attack ' + pokemoN[y] + ' ' + moveNames[z] + ' ?'
+  document.getElementById('Damagee').innerHTML = 'What is the damage taken by a' + hpev + ' HP ' + ' / ' + dfev + ' Def ' + pokemoN[x] + ' from a '  + atkev + ' Attack ' + pokemoN[y] + ' ' + moveNames[z] + ' ?'
+ 
   if (moveCategories[z] == 'Special') {
-document.getElementById('Damagee').innerHTML = 'What is the damage taken by a ' + hpev + ' HP ' + hpiv + ' IVs / ' + sdfev + ' SpDef ' + sdfiv + ' IVs ' + pokemoN[x] + ' from a ' + spaiv + ' iv ' + spaev + ' Special Attack ' + pokemoN[y] + ' ' + moveNames[z] + '?'
+document.getElementById('Damagee').innerHTML = 'What is the damage taken by a' + hpev + ' HP ' + ' / ' + sdfev + ' SpDef ' + pokemoN[x] + ' from a '  + spaev + ' Special Attack ' + pokemoN[y] + ' ' + moveNames[z] + ' ?'
   }
-
+    if (document.getElementById("chaos").checked){
+  document.getElementById('Damagee').innerHTML = 'What is the damage taken by a Level ' + level1 + ' ' hpev + ' HP ' + hpiv + ' IVs / ' + dfev + ' Def ' + dfiv + ' IVs ' + pokemoN[x] + ' from a Level ' + level2 + ' ' + atkiv + ' iv ' + atkev + ' Attack ' + pokemoN[y] + ' ' + moveNames[z] + ' ?'
+  if (moveCategories[z] == 'Special') {
+document.getElementById('Damagee').innerHTML = 'What is the damage taken by a Level ' + level1 + ' ' hpev + ' HP ' + hpiv + ' IVs / ' + sdfev + ' SpDef ' + sdfiv + ' IVs ' + pokemoN[x] + ' from a Level ' + level2 + ' ' + spaiv + ' iv ' + spaev + ' Special Attack ' + pokemoN[y] + ' ' + moveNames[z] + '?'
+  }
+  }
+  
 }
 
 
@@ -246,6 +278,7 @@ function guess(damage){
   else{
     document.getElementById("message").innerHTML='Incorrect, your guess is not in the damage range.'
 }
+  document.getElementById("answer").value=''
 }
 function answer(){
   document.getElementById("Answered").innerHTML='Answer: '+ Lower +'%' + ' to ' + Upper + '%'
