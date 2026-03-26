@@ -125,6 +125,7 @@ function generateMonOne() {
     while ((hp[y]+atk[y]+df[y]+spa[y]+sdf[y]+spd[y])<450){
       y=Math.floor(Math.random()*((pokemoN2.length)-1))
     }
+  }
   level1 = 100
   console.log(y);
   console.log(pokemoN[y])
