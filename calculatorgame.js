@@ -213,7 +213,7 @@ function generateCalc() {
     dStatUsed = sdf2
   }
   Lower = Math.floor(.85 * ((((((2 * level1) / 5) + 2) * power*gettypematchup(moveTypes[z],firsttype[x],secondarytype[x]) * (aStatUsed / dStatUsed)) / 50) + 2))
-  Upper = Math.floor((((((Math.floor(2 * level1) / 5) + 2) * power *gettypematchup(moveTypes[z],firsttype[x],seconddarytype[x]) *(aStatUsed / dStatUsed)) / 50) + 2))
+  Upper = Math.floor((((((Math.floor(2 * level1) / 5) + 2) * power *gettypematchup(moveTypes[z],firsttype[x],secondarytype[x]) *(aStatUsed / dStatUsed)) / 50) + 2))
   if (moveTypes[z] == firsttype[y] || moveTypes[z] == secondarytype[y]){
   Lower = Math.floor(.85 * ((((((2 * level1) / 5) + 2) * power*1.5*gettypematchup(moveTypes[z],firsttype[x],secondarytype[x]) * (aStatUsed / dStatUsed)) / 50) + 2))
   Upper = Math.floor((((((Math.floor(2 * level1) / 5) + 2) * power *1.5*gettypematchup(moveTypes[z],firsttype[x],secondarytype[x]) *(aStatUsed / dStatUsed)) / 50) + 2))
