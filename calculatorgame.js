@@ -274,7 +274,7 @@ document.getElementById('Damagee').innerHTML = 'What is the damage taken by a Le
 generateCalc()
 
 function guess(damage){
-  damage = damage.replace(/\D/g, "")
+  damage = parseInt(String(damage).replace(/\D/g, ""))
   guesses=guesses+1
   document.getElementById("GuessNumber").innerHTML ="Number of Guesses: " + guesses
   if ((damage > Lower - 0.7) && (damage < Upper + 0.7)){
