@@ -228,6 +228,7 @@ function gettypematchup(movetype,type1,type2){
 }
 
 function generateCalc() {
+  document.getElementById('guess').style.visibility='visible'
   guesses=0
   document.getElementById("Answered").innerHTML=' '
   document.getElementById("message").innerHTML=' '
@@ -273,6 +274,7 @@ document.getElementById('Damagee').innerHTML = 'What is the damage taken by a Le
 generateCalc()
 
 function guess(damage){
+  damage = damage.replace(/\D/g, "")
   guesses=guesses+1
   document.getElementById("GuessNumber").innerHTML ="Number of Guesses: " + guesses
   if ((damage > Lower - 0.7) && (damage < Upper + 0.7)){
