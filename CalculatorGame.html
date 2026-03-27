@@ -46,6 +46,31 @@
   <script src="calculatorgame.js">
 
   </script>
+<div class='guess' id='guess'><button  class='option' id='option1' onclick='guess(5)'>5%</button>
+  <button class='option' id='option2' onclick='guess(10)'>10%</button>
+  <button  class='option' id='option3' onclick='guess(15)'>15%</button>
+  <button class='option' id='option4' onclick='guess(20)'>20%</button>
+  <button  class='option' id='option5' onclick='guess(25)'>25%</button>
+  <button class='option' id='option6' onclick='guess(30)'>30%</button>
+  <button  class='option' id='option7' onclick='guess(35)'>35%</button>
+  <button class='option' id='option8' onclick='guess(40)'>40%</button>
+  <button  class='option' id='option9' onclick='guess(45)'>45%</button>
+  <button class='option' id='option10' onclick='guess(50)'>50%</button>
+  <button  class='option' id='option11' onclick='guess(55)'>55%</button>
+  <button class='option' id='option12' onclick='guess(60)'>60%</button>
+  <button  class='option' id='option13' onclick='guess(65)'>65%</button>
+  <button class='option' id='option14' onclick='guess(70)'>70%</button>
+  <button  class='option' id='option15' onclick='guess(75)'>75%</button>
+  <button class='option' id='option16' onclick='guess(80)'>80%</button>
+  <button  class='option' id='option17' onclick='guess(85)'>85%</button>
+  <button class='option' id='option18' onclick='guess(90)'>90%</button>
+  <button  class='option' id='option19' onclick='guess(95)'>95%</button>
+    <button  class='option' id='option20' onclick='guess(100)'>100%</button>
+</div>
+
+
+
+  
   <p id="Total"> </p>
   <p id='message'> </p>
   <p id='GuessNumber'> </p>
@@ -54,7 +79,7 @@
 
 </script>
 <button type='button' onclick="generateCalc()">New Game</button>
-<input type='text' id='answer'>
+<input type='text' id='answer' placeholder="(Enter a number)">
 <button type='button' onclick="guess(document.getElementById('answer').value)">Go!</button>
   <button type='button' onclick="hint()">Hint</button>
   <button type='button' onclick="answer()">Show Answer</button>
