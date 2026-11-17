@@ -1,74 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Guess the Pokemon by its Stats</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
- <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <!-- theme.js swaps this between modern.css (default) and style.css (the original look) -->
+  <link id="theme-css" href="modern.css" rel="stylesheet" type="text/css" />
+  <script src="theme.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="manifest" href="/site.webmanifest">
-  <div class="dropdown">
-  <button class="dropbtn">This Project</button>
-  <div class="dropdown-content">
-    <a href="index.html">Pokemon Stat Game</a>
-    <a href='compare.html'>Comparison Game</a>
-    <a href='guess.html'>Match the Pokemon with the Stat!</a>
-    <a href="https://eragon11145.github.io/Wordle-Answers/">Wordle Answers [RETIRED]</a>
-    <a href="https://eragon11145.github.io/Teams/">VGC Randomizer</a>
-    <a href='Competitive.html'>Timed Mode!</a>
-    <a href='calculator.html'>Stat Calculator</a>
-    <a href="reversecalculator.html">IV Calculator</a>
-  </div>
-</div>
-  <p>Generations Included:</p>
-  <select id='Generations'>
-  <option value='all'>All</option>
-  <option value='1'>Gen 1</option>
-  <option value='2'>Gen 2</option>
-  <option value='3'>Gen 3</option>
-  <option value='4'>Gen 4</option>
-    <option value='5'>Gen 5</option>
-  <option value='6'>Gen 6</option>
-  <option value='7'>Gen 7</option>
-  <option value='8'>Gen 8</option>
-      <option value='9'>Gen 9</option>
-
-</select>
-    <p>Only Strong Pokemon (stat total >450)?</p>
-  <input type="checkbox" id='goodness' value='good'>
 </head>
-    <script src="script.js">  
-</script>
-<body onload="hide()">
 
-  <h1>Guess the Pokemon by its stats! Hit New Game to Start!</h1>
-  <div class='HealthBar' id='HealthBar' style: "width:44.44%"><p id="Health"> </p></div>
-  <div class='AttackBar' id='AttackBar'><p id="Attack"> </p></div>
-   <div class='DefenseBar' id='DefenseBar'> <p id="Defense"> </p></div>
-   <div class='SpecialAttackBar' id='SpecialAttackBar'> <p id="SpecialAttack"> </p></div>
-   <div class='SDFBar' id='SDFBar'> <p id="SpecialDefense"> </p></div>
-   <div class='SPDBar' id='SPDBar' > <p id="Speed"> </p></div>
-  <p id="Total"> </p>
-  <p id='message'> </p>
-  <p id='GuessNumber'> </p>
-  <p id='Hinted'> </p>
-  <script src="script.js">  
+<body>
+  <header class="site-header">
+    <div class="dropdown">
+      <button class="dropbtn" type="button">This Project</button>
+      <div class="dropdown-content">
+        <a href="index.html">Pokemon Stat Game</a>
+        <a href="compare.html">Comparison Game</a>
+        <a href="guess.html">Match the Pokemon with the Stat!</a>
+        <a href="https://eragon11145.github.io/Wordle-Answers/">Wordle Answers [RETIRED]</a>
+        <a href="https://eragon11145.github.io/Teams/">VGC Randomizer</a>
+        <a href="Competitive.html">Timed Mode!</a>
+        <a href="calculator.html">Stat Calculator</a>
+        <a href="reversecalculator.html">IV Calculator</a>
+      </div>
+    </div>
+    <button id="themeToggle" class="theme-toggle" type="button">Switch to classic style</button>
+  </header>
 
-</script>
-<button type='button' onclick="newgame()">New Game</button>
-<input type='text' id='answer'>
-<button type='button' onclick="guess(document.getElementById('answer').value)">Go!</button>
-  <button type='button' onclick="hint()">Hint</button>
-  <button type='button' onclick="answer()">Show Answer</button>
-  <p id='Answered'> </p>
-  <p>Created by eragon11145 (Ben Flitcroft). Still a work in progress, contact me if you notice any bugs! (eragon11145 on discord, twitter, or youtube) </p>
-  <a href="https://discord.com/oauth2/authorize?client_id=1298440807686082642">Enjoy the game? Click here to install my discord bot to let you play there too!</a>
+  <main id="game">
+    <h1>Guess the Pokemon by its stats! Hit New Game to Start!</h1>
 
+    <section class="options" aria-label="Game options">
+      <label class="opt">
+        <span>Generations Included:</span>
+        <select id="Generations">
+          <option value="all">All</option>
+          <option value="1">Gen 1</option>
+          <option value="2">Gen 2</option>
+          <option value="3">Gen 3</option>
+          <option value="4">Gen 4</option>
+          <option value="5">Gen 5</option>
+          <option value="6">Gen 6</option>
+          <option value="7">Gen 7</option>
+          <option value="8">Gen 8</option>
+          <option value="9">Gen 9</option>
+        </select>
+      </label>
+      <label class="opt">
+        <input type="checkbox" id="goodness" value="good">
+        <span>Only Strong Pokemon (stat total &ge; 450)?</span>
+      </label>
+      <label class="opt">
+        <input type="checkbox" id="forms" checked>
+        <span>Include Megas &amp; alternate forms?</span>
+      </label>
+    </section>
+
+    <section class="stats" aria-label="Base stats">
+      <div class="stat-row" id="row-hp" data-label="HP" data-value="&ndash;"><div class="stat-track"><div class="HealthBar" id="HealthBar"><p id="Health"> </p></div></div></div>
+      <div class="stat-row" id="row-atk" data-label="Attack" data-value="&ndash;"><div class="stat-track"><div class="AttackBar" id="AttackBar"><p id="Attack"> </p></div></div></div>
+      <div class="stat-row" id="row-def" data-label="Defense" data-value="&ndash;"><div class="stat-track"><div class="DefenseBar" id="DefenseBar"><p id="Defense"> </p></div></div></div>
+      <div class="stat-row" id="row-spa" data-label="Sp. Atk" data-value="&ndash;"><div class="stat-track"><div class="SpecialAttackBar" id="SpecialAttackBar"><p id="SpecialAttack"> </p></div></div></div>
+      <div class="stat-row" id="row-spd" data-label="Sp. Def" data-value="&ndash;"><div class="stat-track"><div class="SDFBar" id="SDFBar"><p id="SpecialDefense"> </p></div></div></div>
+      <div class="stat-row" id="row-spe" data-label="Speed" data-value="&ndash;"><div class="stat-track"><div class="SPDBar" id="SPDBar"><p id="Speed"> </p></div></div></div>
+      <p id="Total"> </p>
+    </section>
+
+    <section class="feedback" aria-live="polite">
+      <p id="message"> </p>
+      <p id="GuessNumber"> </p>
+      <p id="Hinted"> </p>
+      <p id="Answered"> </p>
+      <div id="GuessList" class="guess-list"></div>
+    </section>
+
+    <section class="controls">
+      <button type="button" id="btnNew" class="primary">New Game</button>
+      <input type="text" id="answer" placeholder="Type a Pokemon..." autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your guess">
+      <button type="button" id="btnGo">Go!</button>
+      <button type="button" id="btnHint">Hint</button>
+      <button type="button" id="btnAnswer">Show Answer</button>
+    </section>
+
+    <footer>
+      <p>Created by eragon11145 (Ben Flitcroft). Still a work in progress, contact me if you notice any bugs! (eragon11145 on discord, twitter, or youtube) </p>
+      <a href="https://discord.com/oauth2/authorize?client_id=1298440807686082642">Enjoy the game? Click here to install my discord bot to let you play there too!</a>
+    </footer>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="game.js"></script>
 </body>
-  <script src="script.js">
-  </script>
 
 </html>
