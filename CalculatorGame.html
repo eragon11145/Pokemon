@@ -1,93 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Guess the Pokemon by its Stats</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guess the Damage</title>
+  <!-- theme.js swaps this between modern.css (default) and style.css (the original look) -->
+  <link id="theme-css" href="modern.css" rel="stylesheet" type="text/css" />
+  <script src="theme.js"></script>
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="manifest" href="/site.webmanifest">
-  <div class="dropdown">
-    <button class="dropbtn">This Project</button>
-    <div class="dropdown-content">
-      <a href="index.html">Pokemon Stat Game</a>
-      <a href="https://eragon11145.github.io/Wordle-Answers/">Wordle Answers [RETIRED]</a>
-      <a href="https://eragon11145.github.io/Teams/">VGC Randomizer</a>
-      <a href='Competitive.html'>Timed Mode!</a>
-      <a href='calculator.html'>Stat Calculator</a>
-      <a href='compare.html'>Comparison Game</a>
-      <a href="reversecalculator.html">IV Calculator</a>
-    </div>
-  </div>
-
-      <p>Chaos mode? (IVs, Evs, Levels all random)</p>
-  <input type="checkbox" id='chaos' value='chaotic'>
-      <p>Only Strong Pokemon (stat total >450)?</p>
-  <input type="checkbox" id='goodness' value='good'>
-
 </head>
-<!-- <script src="calculatorgame.js">
-</script>
--->
 
-<body onload="hide()">
+<body>
+  <header class="site-header">
+    <div class="dropdown">
+      <button class="dropbtn" type="button">This Project</button>
+      <div class="dropdown-content">
+        <a href="index.html">Pokemon Stat Game</a>
+        <a href="compare.html">Comparison Game</a>
+        <a href="guess.html">Match the Pokemon with the Stat!</a>
+        <a href="https://eragon11145.github.io/Wordle-Answers/">Wordle Answers [RETIRED]</a>
+        <a href="https://eragon11145.github.io/Teams/">VGC Randomizer</a>
+        <a href="Competitive.html">Timed Mode!</a>
+        <a href="calculator.html">Stat Calculator</a>
+        <a href="reversecalculator.html">IV Calculator</a>
+      </div>
+    </div>
+    <button id="themeToggle" class="theme-toggle" type="button">Switch to classic style</button>
+  </header>
 
-  <h1>Guess the Damage dealt from the given attack! Hit new game to start!</h1>
-  <div class='HealthBar' id='HealthBar' style: "width:44.44%">
-    <p id="Health"> </p>
-  </div>
-  <p id="Attacker"> </p>
-  <p id='Defender'> </p>
-  <p id='Damagee'> </p>
-  <p id='Hinted'> </p>
-  <script src="calculatorgame.js">
+  <main>
+    <h1>Guess the Damage dealt from the given attack! Hit New Game to start!</h1>
+    <section class="options" aria-label="Game options">
+      <label class="opt">
+        <input type="checkbox" id="chaos" value="chaotic">
+        <span>Chaos mode? (IVs, EVs, levels all random)</span>
+      </label>
+      <label class="opt">
+        <input type="checkbox" id="goodness" value="good">
+        <span>Only Strong Pokemon (stat total &ge; 450)?</span>
+      </label>
+      <label class="opt">
+        <input type="checkbox" id="forms" checked>
+        <span>Include Megas &amp; alternate forms?</span>
+      </label>
+    </section>
 
-  </script>
-<div class='guess' id='guess'><button  class='option' id='option1' onclick='guess(5)'>5%</button>
-  <button class='option' id='option2' onclick='guess(10)'>10%</button>
-  <button  class='option' id='option3' onclick='guess(15)'>15%</button>
-  <button class='option' id='option4' onclick='guess(20)'>20%</button>
-  <button  class='option' id='option5' onclick='guess(25)'>25%</button>
-  <button class='option' id='option6' onclick='guess(30)'>30%</button>
-  <button  class='option' id='option7' onclick='guess(35)'>35%</button>
-  <button class='option' id='option8' onclick='guess(40)'>40%</button>
-  <button  class='option' id='option9' onclick='guess(45)'>45%</button>
-  <button class='option' id='option10' onclick='guess(50)'>50%</button>
-  <button  class='option' id='option11' onclick='guess(55)'>55%</button>
-  <button class='option' id='option12' onclick='guess(60)'>60%</button>
-  <button  class='option' id='option13' onclick='guess(65)'>65%</button>
-  <button class='option' id='option14' onclick='guess(70)'>70%</button>
-  <button  class='option' id='option15' onclick='guess(75)'>75%</button>
-  <button class='option' id='option16' onclick='guess(80)'>80%</button>
-  <button  class='option' id='option17' onclick='guess(85)'>85%</button>
-  <button class='option' id='option18' onclick='guess(90)'>90%</button>
-  <button  class='option' id='option19' onclick='guess(95)'>95%</button>
-    <button  class='option' id='option20' onclick='guess(100)'>100%</button>
-</div>
+    <section class="matchup" aria-live="polite">
+      <p id="Attacker"> </p>
+      <p id="Defender"> </p>
+      <h2 id="Damagee" class="question"> </h2>
+    </section>
 
+    <div class="quick-guesses" id="guessButtons" style="visibility:hidden">
+      <button type="button" class="chip-btn" data-pct="5">5%</button>
+      <button type="button" class="chip-btn" data-pct="10">10%</button>
+      <button type="button" class="chip-btn" data-pct="15">15%</button>
+      <button type="button" class="chip-btn" data-pct="20">20%</button>
+      <button type="button" class="chip-btn" data-pct="25">25%</button>
+      <button type="button" class="chip-btn" data-pct="30">30%</button>
+      <button type="button" class="chip-btn" data-pct="35">35%</button>
+      <button type="button" class="chip-btn" data-pct="40">40%</button>
+      <button type="button" class="chip-btn" data-pct="45">45%</button>
+      <button type="button" class="chip-btn" data-pct="50">50%</button>
+      <button type="button" class="chip-btn" data-pct="55">55%</button>
+      <button type="button" class="chip-btn" data-pct="60">60%</button>
+      <button type="button" class="chip-btn" data-pct="65">65%</button>
+      <button type="button" class="chip-btn" data-pct="70">70%</button>
+      <button type="button" class="chip-btn" data-pct="75">75%</button>
+      <button type="button" class="chip-btn" data-pct="80">80%</button>
+      <button type="button" class="chip-btn" data-pct="85">85%</button>
+      <button type="button" class="chip-btn" data-pct="90">90%</button>
+      <button type="button" class="chip-btn" data-pct="95">95%</button>
+      <button type="button" class="chip-btn" data-pct="100">100%</button>
+    </div>
 
+    <section class="feedback" aria-live="polite">
+      <p id="message"> </p>
+      <p id="GuessNumber"> </p>
+      <p id="Hinted"> </p>
+      <p id="Answered"> </p>
+    </section>
+    <section class="controls">
+      <button type="button" id="btnNew" class="primary">New Game</button>
+      <input type="text" id="answer" placeholder="(Enter a number)" inputmode="numeric" autocomplete="off" aria-label="Damage percent guess">
+      <button type="button" id="btnGo">Go!</button>
+      <button type="button" id="btnHint">Hint</button>
+      <button type="button" id="btnAnswer">Show Answer</button>
+    </section>
+    <footer>
+      <p>Created by eragon11145 (Ben Flitcroft). Still a work in progress, contact me if you notice any bugs! (eragon11145 on discord, twitter, or youtube) </p>
+    </footer>
+  </main>
 
-  
-  <p id="Total"> </p>
-  <p id='message'> </p>
-  <p id='GuessNumber'> </p>
-  <p id='Hinted'> </p>
-  <script src="script.js">  
-
-</script>
-<button type='button' onclick="generateCalc()">New Game</button>
-<input type='text' id='answer' placeholder="(Enter a number)">
-<button type='button' onclick="guess(document.getElementById('answer').value)">Go!</button>
-  <button type='button' onclick="hint()">Hint</button>
-  <button type='button' onclick="answer()">Show Answer</button>
-  <p id='Answered'> </p>
-  <p>Created by eragon11145 (Ben Flitcroft). Still a work in progress, contact me if you notice any bugs! (eragon11145 on discord, twitter, or youtube) </p>
-
+  <script src="data.js"></script>
+  <script src="types.js"></script>
+  <script src="pokecore.js"></script>
+  <script src="moves.js"></script>
+  <script src="calc.js"></script>
+  <script src="calculatorgame.js"></script>
 </body>
-<script src="calculatorgame.js">
-</script>
 
 </html>

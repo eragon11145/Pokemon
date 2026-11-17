@@ -1,82 +1,97 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+
+<head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Speed round</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <!-- theme.js swaps this between modern.css (default) and style.css (the original look) -->
+  <link id="theme-css" href="modern.css" rel="stylesheet" type="text/css" />
+  <script src="theme.js"></script>
   <link href="gligar.ico" rel="icon" type="image/x-icon">
-    <!DOCTYPE html>
-
-  <div class="dropdown">
-  <button class="dropbtn">This Project</button>
-  <div class="dropdown-content">
-    <a href="index.html">Pokemon Stat Game</a>
-    <a href="https://eragon11145.github.io/Wordle-Answers/">Wordle Answers</a>
-    <a href="https://eragon11145.github.io/Teams/">VGC Randomizer</a>
-    <a href='calculator.html'>Stat Calculator</a>
-    <a href="reversecalculator.html">IV Calculator</a>
-  </div>
-</div>
-  <p>Generations Included:</p>
-  <select id='Generations'>
-  <option value='all'>All</option>
-  <option value='1'>Gen 1</option>
-  <option value='2'>Gen 2</option>
-  <option value='3'>Gen 3</option>
-  <option value='4'>Gen 4</option>
-    <option value='5'>Gen 5</option>
-  <option value='6'>Gen 6</option>
-  <option value='7'>Gen 7</option>
-  <option value='8'>Gen 8</option>
-
-</select>
-    <p>Only Strong Pokemon (stat total >450)?</p>
-  <input type="checkbox" id='goodness' value='good'>
 </head>
-    <script src="competitive.js">  
-</script>
 
+<body>
+  <header class="site-header">
+    <div class="dropdown">
+      <button class="dropbtn" type="button">This Project</button>
+      <div class="dropdown-content">
+        <a href="index.html">Pokemon Stat Game</a>
+        <a href="compare.html">Comparison Game</a>
+        <a href="guess.html">Match the Pokemon with the Stat!</a>
+        <a href="https://eragon11145.github.io/Wordle-Answers/">Wordle Answers [RETIRED]</a>
+        <a href="https://eragon11145.github.io/Teams/">VGC Randomizer</a>
+        <a href="Competitive.html">Timed Mode!</a>
+        <a href="calculator.html">Stat Calculator</a>
+        <a href="reversecalculator.html">IV Calculator</a>
+      </div>
+    </div>
+    <button id="themeToggle" class="theme-toggle" type="button">Switch to classic style</button>
+  </header>
 
-  </head>
-      
+  <main>
     <h1>Guess the Pokemon by its Stats Speedround</h1>
-    <p>Guess as many pokemon correctly as you can in 3 minutes! After each correct guess, a new Pokemon will be generated.</p>
-  <p id='total'> </p>
-    <input type='text' id='answer'>
-<button id='guess' type='button' onclick="guess(document.getElementById('answer').value)">Go!</button>
-  <script src="competitive.js">
-    </script>
-  <body onload="hide()">
-  <div class='HealthBar' id='HealthBar' style: "width:44.44%"><p id="Health"> </p></div>
-  <div class='AttackBar' id='AttackBar'><p id="Attack"> </p></div>
-   <div class='DefenseBar' id='DefenseBar'> <p id="Defense"> </p></div>
-   <div class='SpecialAttackBar' id='SpecialAttackBar'> <p id="SpecialAttack"> </p></div>
-   <div class='SDFBar' id='SDFBar'> <p id="SpecialDefense"> </p></div>
-   <div class='SPDBar' id='SPDBar' > <p id="Speed"> </p></div>
-  <p id="Total"> </p>
-  <p id='message'> </p>
-  <p id='GuessNumber'> </p>
-  <p id='Hinted'> </p>
-  <script src="competitive.js">  
+    <p class="lede">Guess as many Pokemon correctly as you can in 3 minutes! After each correct guess, a new Pokemon will be generated.</p>
+    <section class="options" aria-label="Game options">
+      <label class="opt">
+        <span>Generations Included:</span>
+        <select id="Generations">
+          <option value="all">All</option>
+          <option value="1">Gen 1</option>
+          <option value="2">Gen 2</option>
+          <option value="3">Gen 3</option>
+          <option value="4">Gen 4</option>
+          <option value="5">Gen 5</option>
+          <option value="6">Gen 6</option>
+          <option value="7">Gen 7</option>
+          <option value="8">Gen 8</option>
+          <option value="9">Gen 9</option>
+        </select>
+      </label>
+      <label class="opt">
+        <input type="checkbox" id="goodness" value="good">
+        <span>Only Strong Pokemon (stat total &ge; 450)?</span>
+      </label>
+      <label class="opt">
+        <input type="checkbox" id="forms" checked>
+        <span>Include Megas &amp; alternate forms?</span>
+      </label>
+    </section>
 
-</script>
+    <div class="scorebar">
+      <span id="Timer" class="timer">3:00</span>
+      <span id="total">Score: 0</span>
+      <span id="best"> </span>
+    </div>
 
-    <p id="Timer"> </p>
-      <p id="Health"> </p>
-  <p id="Attack"> </p>
-  <p id="Defense"> </p>
-  <p id="SpecialAttack"> </p>
-  <p id="SpecialDefense"> </p>
-  <p id="Speed"> </p>
-  <p id="Total"> </p>
-  <p id='message'> </p>
-    <script src="competitive.js">
-    </script>
-    <button type="button" onclick="newRound()">New Round</button>
-    <p id='Done'> </p>
-    <script src="competitive.js">
-    </script>
-    <p id='Answered'> </p>
-  </body>
+    <section class="stats" aria-label="Base stats">
+      <div class="stat-row" id="row-hp" data-label="HP" data-value="&ndash;"><div class="stat-track"><div class="HealthBar" id="HealthBar"><p id="Health"> </p></div></div></div>
+      <div class="stat-row" id="row-atk" data-label="Attack" data-value="&ndash;"><div class="stat-track"><div class="AttackBar" id="AttackBar"><p id="Attack"> </p></div></div></div>
+      <div class="stat-row" id="row-def" data-label="Defense" data-value="&ndash;"><div class="stat-track"><div class="DefenseBar" id="DefenseBar"><p id="Defense"> </p></div></div></div>
+      <div class="stat-row" id="row-spa" data-label="Sp. Atk" data-value="&ndash;"><div class="stat-track"><div class="SpecialAttackBar" id="SpecialAttackBar"><p id="SpecialAttack"> </p></div></div></div>
+      <div class="stat-row" id="row-spd" data-label="Sp. Def" data-value="&ndash;"><div class="stat-track"><div class="SDFBar" id="SDFBar"><p id="SpecialDefense"> </p></div></div></div>
+      <div class="stat-row" id="row-spe" data-label="Speed" data-value="&ndash;"><div class="stat-track"><div class="SPDBar" id="SPDBar"><p id="Speed"> </p></div></div></div>
+      <p id="Total"> </p>
+    </section>
+
+    <section class="feedback" aria-live="polite">
+      <p id="message"> </p>
+      <p id="Done"> </p>
+      <p id="Answered"> </p>
+    </section>
+    <section class="controls">
+      <button type="button" id="btnRound" class="primary">New Round</button>
+      <input type="text" id="answer" placeholder="Type a Pokemon..." autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your guess" disabled>
+      <button type="button" id="guess" disabled>Go!</button>
+    </section>
+    <footer>
+      <p>Created by eragon11145 (Ben Flitcroft). Still a work in progress, contact me if you notice any bugs! (eragon11145 on discord, twitter, or youtube) </p>
+    </footer>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="pokecore.js"></script>
+  <script src="competitive.js"></script>
+</body>
+
 </html>

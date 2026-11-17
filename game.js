@@ -1,5 +1,5 @@
 // Guess the Pokémon by its stats — game logic.
-// Requires data.js (POKEMON_DATA) to be loaded first.
+// Requires data.js and pokecore.js to be loaded first.
 (function () {
   'use strict';
 
@@ -12,89 +12,15 @@
     { id: 'Speed', bar: 'SPDBar', label: 'Speed', row: 'row-spe' }
   ];
 
-  // ---- Pool ---------------------------------------------------------------
-  var POOL = POKEMON_DATA.map(function (r) {
-    var stats = r.slice(2, 8);
-    return {
-      name: r[0],
-      gen: r[1],
-      stats: stats,
-      total: stats.reduce(function (a, b) { return a + b; }, 0),
-      isForm: r[8] === 1
-    };
-  });
-
-  // ---- Name matching ------------------------------------------------------
-  var FORM_WORDS = { alola: 'alolan', galar: 'galarian', hisui: 'hisuian', paldea: 'paldean' };
-
-  function clean(s) {
-    return String(s)
-      .replace(/♀/g, ' f ')
-      .replace(/♂/g, ' m ')
-      .normalize('NFD').replace(/[̀-ͯ]/g, '')
-      .toLowerCase();
-  }
-  // "mrmime" style key: letters and digits only
-  function flatKey(s) { return clean(s).replace(/[^a-z0-9]/g, ''); }
-  // order-independent key so "Charizard Mega X" matches "Mega Charizard X"
-  function tokenKey(s) {
-    return clean(s).split(/[^a-z0-9]+/).filter(Boolean).map(function (t) {
-      return FORM_WORDS[t] || t;
-    }).sort().join(' ');
-  }
-
-  var BY_FLAT = {}, BY_TOKEN = {};
-  POOL.forEach(function (p, i) {
-    p.flat = flatKey(p.name);
-    p.token = tokenKey(p.name);
-    BY_FLAT[p.flat] = i;
-    BY_TOKEN[p.token] = i;
-  });
-
-  // Extra spellings: [typed text, canonical name(s)]
-  var ALIASES = {
-    'nidoran': ['Nidoran♀', 'Nidoran♂'],
-    'nidoranf': ['Nidoran♀'], 'nidoranm': ['Nidoran♂'],
-    'crocolar': ['Crocalor'],
-    'paldean tauros combat breed': ['Paldean Tauros'],
-    'paldean tauros blaze breed': ['Paldean Tauros'],
-    'paldean tauros aqua breed': ['Paldean Tauros']
-  };
-
-  function findMatches(typed) {
-    var f = flatKey(typed), t = tokenKey(typed);
-    var hit = [];
-    if (BY_FLAT[f] !== undefined) hit.push(BY_FLAT[f]);
-    else if (BY_TOKEN[t] !== undefined) hit.push(BY_TOKEN[t]);
-    else if (ALIASES[f] || ALIASES[typed.trim().toLowerCase()]) {
-      (ALIASES[f] || ALIASES[typed.trim().toLowerCase()]).forEach(function (n) {
-        var i = BY_FLAT[flatKey(n)];
-        if (i !== undefined) hit.push(i);
-      });
-    }
-    return hit;
-  }
+  var POOL = PokeCore.POOL, findMatches = PokeCore.findMatches, sameStats = PokeCore.sameStats;
 
   // ---- State --------------------------------------------------------------
   var answer = -1, guesses = 0, hintLen = 0, over = true, guessed = [];
 
-  function $(id) { return document.getElementById(id); }
-  function sameStats(a, b) {
-    for (var i = 0; i < 6; i++) if (a.stats[i] !== b.stats[i]) return false;
-    return true;
-  }
+  var $ = PokeCore.$;
   function setText(id, text) { $(id).textContent = text; }
 
-  function currentPool() {
-    var gen = $('Generations').value;
-    var strong = $('goodness').checked;
-    var forms = $('forms') ? $('forms').checked : true;
-    return POOL.filter(function (p) {
-      return (gen === 'all' || p.gen === parseInt(gen, 10)) &&
-        (!strong || p.total >= 450) &&
-        (forms || !p.isForm);
-    });
-  }
+  function currentPool() { return PokeCore.filterPool(PokeCore.readOptions()); }
 
   function renderGuesses() {
     var box = $('GuessList');

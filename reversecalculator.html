@@ -1,101 +1,116 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+
+<head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>IV Calculator</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
-  <div class="dropdown">
-  <button class="dropbtn">This Project</button>
-  <div class="dropdown-content">
-    <a href="index.html">Pokemon Stat Game</a>
-    <a href="https://eragon11145.github.io/Wordle-Answers/">Wordle Answers</a>
-    <a href="https://eragon11145.github.io/Teams/">VGC Randomizer</a>
-    <a href='calculator.html'>Stat Calculator</a>
-  </div>
-</div>
-  </head>
-      
-    <h1>Pokemon Stat Calculator</h1>
-    <p>This calculator will tell you the lowest possible value of the Individual Values (IVs) of a Pokemon, which is information not viewable in normal gameplay. Input the Pokemon, the EVs (effort values) and the Stat Values and click calculate!</p>
-  <p id='total'> </p>
-  <br>
-  <p>Pokemon:</p>
-  <input type='text' id='answer'>
-  <script src="reversecalculator.js">
-    </script>
-  <body>
-    <p id="Pokemon"> </p>
-     <table> <tr><td><p id="Health"></td> </p>
-  <td><p id="Attack"> </p></td>
-  <td><p id="Defense"> </p></td>
-  <td><p id="SpecialAttack"> </p></td>
-  <td><p id="SpecialDefense"> </p></td>
-  <td><p id="Speed"> </p></td>
-  <td><p id="Total"> </p></td></tr>
-     <tr><td><p id="Health3"> </p></td>
-  <td><p id="Attack3"> </p></td>
-  <td><p id="Defense3"> </p></td>
-  <td><p id="SpecialAttack3"> </p></td>
-  <td><p id="SpecialDefense3"> </p></td>
-  <td><p id="Speed3"> </p></td>
-  </tr></table>
-  <p id='message'> </p>
-  <p>Level:</p>
-  <input type="text" id='Level'>
-<select id='Nature'>
-  <option value="Adamant">Adamant</option>
-  <option value="Lonely">Lonely</option>
-  <option value="Naughty">Naughty</option>
-  <option value="Brave">Brave</option>
-  <option value="Bold">Bold</option>
-  <option value="Impish">Impish</option>
-  <option value="Lax">Lax</option>
-  <option value="Relaxed">Relaxed</option>
-  <option value="Modest">Modest</option>
-  <option value="Mild">Mild</option>
-  <option value="Rash">Rash</option>
-  <option value="Quiet">Quiet</option>
-  <option value="Calm">Calm</option>
-  <option value="Gentle">Gentle</option>
-  <option value="Sassy">Sassy</option>  
-  <option value="Careful">Careful</option>
-  <option value="Timid">Timid</option>
-  <option value="Hasty">Hasty</option>
-  <option value="Jolly">Jolly</option>
-  <option value="Naive">Naive</option>
-  <option value="Docile">Docile</option>
-  <option value="Serious">Serious</option>
-  <option value="Hardy">Hardy</option>
-  <option value="Bashful">Bashful</option>
-  <option value="Quirky">Quirky</option>
-  </select>
-  <div class='EV'><p>EVs(0-252):</p></div>
-    <p>HP</p> <p>Attack</p><p>Defense</p><p>Special Attack</p> <p>Special Defense</p> <p>Speed</p>
+  <!-- theme.js swaps this between modern.css (default) and style.css (the original look) -->
+  <link id="theme-css" href="modern.css" rel="stylesheet" type="text/css" />
+  <script src="theme.js"></script>
+  <link href="atom.ico" rel="icon" type="image/x-icon">
+</head>
 
-  
-  <input type='text' id="Health1">
-  <input type='text' id="Attack1">
-  <input type='text' id="Defense1">
-  <input type='text' id="SpecialAttack1">   
-  <input type='text' id="SpecialDefense1">
-  <input type='text' id="Speed1">
-    <div class='IVs'>
-  <p>Stat Values:</p> </div>
-  <p>HP</p><p>Attack</p><p>Defense</p> <p>Special Attack</p><p>Special Defense</p><p>Speed</p>
+<body>
+  <header class="site-header">
+    <div class="dropdown">
+      <button class="dropbtn" type="button">This Project</button>
+      <div class="dropdown-content">
+        <a href="index.html">Pokemon Stat Game</a>
+        <a href="compare.html">Comparison Game</a>
+        <a href="guess.html">Match the Pokemon with the Stat!</a>
+        <a href="https://eragon11145.github.io/Wordle-Answers/">Wordle Answers [RETIRED]</a>
+        <a href="https://eragon11145.github.io/Teams/">VGC Randomizer</a>
+        <a href="Competitive.html">Timed Mode!</a>
+        <a href="calculator.html">Stat Calculator</a>
+        <a href="reversecalculator.html">IV Calculator</a>
+      </div>
+    </div>
+    <button id="themeToggle" class="theme-toggle" type="button">Switch to classic style</button>
+  </header>
 
-   
-      <input type='text' id="Health2">
-  <input type='text' id="Attack2">
-  <input type='text' id="Defense2">
-  <input type='text' id="SpecialAttack2">
-  <input type='text' id="SpecialDefense2">
-  <input type='text' id="Speed2">
-    <script src="reversecalculator.js">
-    </script>
-    <p id='Done'> </p>
-    <button id='guess' type='button' onclick="stats(document.getElementById('answer').value)">Calculate!</button>
-    <script src="reversecalculator.js">
-    </script>
-  </body>
+  <main class="wide">
+    <h1>Pokemon IV Calculator</h1>
+    <p class="lede">This calculator finds the Individual Values (IVs) a Pokemon must have, information not viewable in normal gameplay. Input the Pokemon, its level, nature, EVs and the stat values shown in-game, then click Calculate! Leave a stat blank to skip it.</p>
+
+    <section class="options" aria-label="Pokemon">
+      <label class="opt"><span>Pokemon:</span><input type="text" id="answer" placeholder="e.g. Garchomp" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+      <label class="opt"><span>Level:</span><input type="number" inputmode="numeric" id="Level" min="1" max="100" value="100"></label>
+      <label class="opt"><span>Nature:</span>
+        <select id="Nature">
+          <option value="Adamant">Adamant</option>
+          <option value="Lonely">Lonely</option>
+          <option value="Naughty">Naughty</option>
+          <option value="Brave">Brave</option>
+          <option value="Bold">Bold</option>
+          <option value="Impish">Impish</option>
+          <option value="Lax">Lax</option>
+          <option value="Relaxed">Relaxed</option>
+          <option value="Modest">Modest</option>
+          <option value="Mild">Mild</option>
+          <option value="Rash">Rash</option>
+          <option value="Quiet">Quiet</option>
+          <option value="Calm">Calm</option>
+          <option value="Gentle">Gentle</option>
+          <option value="Sassy">Sassy</option>
+          <option value="Careful">Careful</option>
+          <option value="Timid">Timid</option>
+          <option value="Hasty">Hasty</option>
+          <option value="Jolly">Jolly</option>
+          <option value="Naive">Naive</option>
+          <option value="Docile">Docile</option>
+          <option value="Serious">Serious</option>
+          <option value="Hardy">Hardy</option>
+          <option value="Bashful">Bashful</option>
+          <option value="Quirky">Quirky</option>
+        </select>
+      </label>
+    </section>
+
+    <fieldset class="grid-group">
+      <legend>EVs (0-252)</legend>
+        <label class="field"><span>HP</span><input type="number" inputmode="numeric" id="Health1" min="0" max="252" placeholder=""></label>
+        <label class="field"><span>Attack</span><input type="number" inputmode="numeric" id="Attack1" min="0" max="252" placeholder=""></label>
+        <label class="field"><span>Defense</span><input type="number" inputmode="numeric" id="Defense1" min="0" max="252" placeholder=""></label>
+        <label class="field"><span>Sp. Atk</span><input type="number" inputmode="numeric" id="SpecialAttack1" min="0" max="252" placeholder=""></label>
+        <label class="field"><span>Sp. Def</span><input type="number" inputmode="numeric" id="SpecialDefense1" min="0" max="252" placeholder=""></label>
+        <label class="field"><span>Speed</span><input type="number" inputmode="numeric" id="Speed1" min="0" max="252" placeholder=""></label>
+    </fieldset>
+    <fieldset class="grid-group">
+      <legend>Stat values (as shown in-game)</legend>
+        <label class="field"><span>HP</span><input type="number" inputmode="numeric" id="Health2" min="1" max="999" placeholder=""></label>
+        <label class="field"><span>Attack</span><input type="number" inputmode="numeric" id="Attack2" min="1" max="999" placeholder=""></label>
+        <label class="field"><span>Defense</span><input type="number" inputmode="numeric" id="Defense2" min="1" max="999" placeholder=""></label>
+        <label class="field"><span>Sp. Atk</span><input type="number" inputmode="numeric" id="SpecialAttack2" min="1" max="999" placeholder=""></label>
+        <label class="field"><span>Sp. Def</span><input type="number" inputmode="numeric" id="SpecialDefense2" min="1" max="999" placeholder=""></label>
+        <label class="field"><span>Speed</span><input type="number" inputmode="numeric" id="Speed2" min="1" max="999" placeholder=""></label>
+    </fieldset>
+
+    <section class="controls">
+      <button id="guess" type="button" class="primary">Calculate!</button>
+    </section>
+
+    <section class="feedback" aria-live="polite">
+      <p id="Pokemon"> </p>
+      <p id="message"> </p>
+    </section>
+    <table class="results" aria-label="Results">
+      <thead><tr><th></th><th scope="col">HP</th><th scope="col">Attack</th><th scope="col">Defense</th><th scope="col">Sp. Atk</th><th scope="col">Sp. Def</th><th scope="col">Speed</th><th scope="col">Total</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Base</th><td><span id="Health"> </span></td><td><span id="Attack"> </span></td><td><span id="Defense"> </span></td><td><span id="SpecialAttack"> </span></td><td><span id="SpecialDefense"> </span></td><td><span id="Speed"> </span></td><td><span id="Total"> </span></td></tr>
+        <tr><th scope="row">Possible IVs</th><td><span id="Health3"> </span></td><td><span id="Attack3"> </span></td><td><span id="Defense3"> </span></td><td><span id="SpecialAttack3"> </span></td><td><span id="SpecialDefense3"> </span></td><td><span id="Speed3"> </span></td><td></td></tr>
+      </tbody>
+    </table>
+
+    <footer>
+      <p>Created by eragon11145 (Ben Flitcroft). Still a work in progress, contact me if you notice any bugs! (eragon11145 on discord, twitter, or youtube) </p>
+    </footer>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="pokecore.js"></script>
+  <script src="calc.js"></script>
+  <script src="reversecalculator.js"></script>
+</body>
+
 </html>
