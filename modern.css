@@ -367,3 +367,61 @@ body:has(main.wide) .site-header { max-width: 860px; }
   .results th, .results td { padding: 6px 2px; }
 }
 .results #Total { display: inline; border: 0; padding: 0; margin: 0; text-align: inherit; }
+
+/* ---- Daily challenge ---- */
+.eyebrow { display: block; color: var(--accent); font-weight: 700; font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; margin: 0 0 4px; }
+[hidden] { display: none !important; }
+
+.dots { display: flex; gap: 8px; margin: 0 0 20px; }
+.dot {
+  flex: 1 1 0; min-width: 0; text-align: center;
+  padding: 7px 2px; border-radius: 10px; font-size: .75rem; font-weight: 700;
+  background: var(--surface-2); color: var(--muted); border: 1px solid var(--border);
+  white-space: nowrap; overflow: hidden; text-overflow: clip;
+}
+.dot.current { border-color: var(--accent); color: var(--text); }
+.dot.done { color: #fff; border-color: transparent; font-size: .9rem; }
+.t-great { color: var(--good); }
+.t-good { color: #8a9a0b; }
+.t-meh { color: #d97706; }
+.t-bad { color: #dc2626; }
+.dot.done.t-great { background: var(--good); color: #fff; }
+.dot.done.t-good { background: #a3b21a; color: #1c1c00; }
+.dot.done.t-meh { background: #f59e0b; color: #2b1800; }
+.dot.done.t-bad { background: #dc2626; color: #fff; }
+@media (prefers-color-scheme: dark) {
+  .t-good { color: #c4d63a; } .t-meh { color: #fbbf24; } .t-bad { color: #f87171; }
+  .dot.done.t-great { color: #04210f; }
+}
+
+.round { display: block; color: var(--muted); font-size: .9rem; margin: 0 0 2px; }
+#guessInput { flex: 1 1 140px; font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.feedback-line { display: block; min-height: 1.5em; margin-top: 8px; color: var(--bad); font-size: .9rem; }
+
+.reveal-title { display: block; font-size: 1.15rem; font-weight: 700; margin: 4px 0 12px; }
+.reveal-guess { display: block; font-weight: 700; margin: 10px 0 16px; }
+.marker-track { position: relative; overflow: visible; height: 18px; }
+.marker-track > div { height: 100%; border-radius: 999px; transition: width .6s cubic-bezier(.2, .8, .2, 1); }
+.marker-track p { display: none; }
+.guess-marker {
+  position: absolute; top: -5px; width: 4px; height: 28px; margin-left: -2px;
+  background: var(--text); border-radius: 2px; box-shadow: 0 0 0 2px var(--surface);
+}
+
+.score-label { display: block; color: var(--muted); text-align: center; margin: 4px 0 0; }
+.score { display: block; text-align: center; font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin: 0 0 16px; letter-spacing: -.03em; }
+.score small { font-size: 1.4rem; color: var(--muted); font-weight: 600; }
+.breakdown { margin-top: 0; }
+.breakdown td:nth-child(2), .breakdown th:nth-child(2) { text-align: left; }
+.breakdown tbody th { white-space: nowrap; }
+
+.share { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 20px 0; }
+.share pre {
+  margin: 0; padding: 12px 16px; width: 100%; white-space: pre-wrap; word-break: break-word;
+  background: var(--surface-2); border-radius: var(--radius); font: inherit; font-size: .92rem; text-align: center;
+}
+.history { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0 0 16px; text-align: center; }
+.history dt { color: var(--muted); font-size: .8rem; }
+.history dd { margin: 0; font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.next-puzzle { display: block; text-align: center; color: var(--muted); }
+.next-puzzle strong { color: var(--text); font-variant-numeric: tabular-nums; }
