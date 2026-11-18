@@ -55,7 +55,9 @@
 
   // 100% for an exact guess, dropping linearly to 0% when you are off by the stat's whole value.
   function accuracy(guess, actual) {
-    return Math.max(0, 1 - Math.abs(guess - actual) / actual) * 100;
+    var k = 15; // prevents low stats from blowing up the error ratio
+    var error = Math.abs(guess - actual) / (actual + k);
+    return Math.max(0, 1 - error) * 100;
   }
   function average(list) { return list.reduce(function (a, b) { return a + b; }, 0) / list.length; }
   function tier(pct) { return pct >= 90 ? '🟩' : pct >= 70 ? '🟨' : pct >= 40 ? '🟧' : '🟥'; }
