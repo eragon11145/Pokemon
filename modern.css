@@ -425,3 +425,22 @@ body:has(main.wide) .site-header { max-width: 860px; }
 .history dd { margin: 0; font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; }
 .next-puzzle { display: block; text-align: center; color: var(--muted); }
 .next-puzzle strong { color: var(--text); font-variant-numeric: tabular-nums; }
+
+/* ---- DOU damage game ---- */
+.blurb { color: var(--muted); margin: 0 0 16px; }
+.dou-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 12px; }
+@media (max-width: 640px) { .dou-cards { grid-template-columns: 1fr; } }
+.mon-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
+.mon-card.atk { border-left: 4px solid var(--c-atk); }
+.mon-card.def { border-left: 4px solid var(--c-def); }
+.mon-role { display: block; color: var(--muted); font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.mon-name { display: block; font-size: 1.1rem; margin: 2px 0 8px; }
+.mon-facts { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; margin: 0; font-size: .88rem; }
+.mon-facts dt { color: var(--muted); }
+.mon-facts dd { margin: 0; font-weight: 600; }
+.field-line { font-weight: 700; margin: 0 0 4px; }
+.dou-notes { margin: 0 0 8px; padding-left: 20px; color: var(--muted); font-size: .88rem; }
+.dou-notes:empty { display: none; }
+.calc-desc { font-size: .85rem; color: var(--muted); word-break: break-word; }
+.stat-line { color: var(--muted); font-size: .85rem; }
+.options select { max-width: 100%; min-width: 0; }
