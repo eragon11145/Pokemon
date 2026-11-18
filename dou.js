@@ -82,12 +82,78 @@
     return (parts.join(' / ') || 'no EVs') + (iv.length ? ' (IVs: ' + iv.join(', ') + ')' : '');
   }
 
+  // ---- Stat boosts ---------------------------------------------------------
+  // Self-boosting moves: stat changes per use.
+  var BOOST_MOVES = {
+    'Swords Dance': { atk: 2 }, 'Nasty Plot': { spa: 2 }, 'Calm Mind': { spa: 1, spd: 1 }, 'Dragon Dance': { atk: 1, spe: 1 },
+    'Bulk Up': { atk: 1, def: 1 }, 'Quiver Dance': { spa: 1, spd: 1, spe: 1 }, 'Coil': { atk: 1, def: 1 }, 'Agility': { spe: 2 },
+    'Iron Defense': { def: 2 }, 'Acid Armor': { def: 2 }, 'Amnesia': { spd: 2 }, 'Cosmic Power': { def: 1, spd: 1 }, 'Howl': { atk: 1 },
+    'Tail Glow': { spa: 3 }, 'Growth': { atk: 1, spa: 1 }, 'Tidy Up': { atk: 1, spe: 1 }, 'No Retreat': { atk: 1, def: 1, spa: 1, spd: 1, spe: 1 },
+    'Belly Drum': { atk: 6 }
+  };
+  var ONE_USE = { 'Belly Drum': 1, 'Tail Glow': 1, 'No Retreat': 1 };
+  var NEW_BOOSTS = function () { return { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 }; };
+  function clampB(v) { return Math.max(-6, Math.min(6, v)); }
+
+  // Which stat of the attacker / defender actually matters for a move.
+  function offStat(moveName, moveData) {
+    if (moveName === 'Body Press') return 'def';
+    if (moveName === 'Foul Play') return null; // uses the defender's Attack
+    return moveData.category === 'Physical' ? 'atk' : 'spa';
+  }
+  function defStat(moveName, moveData) {
+    if (['Psyshock', 'Psystrike', 'Secret Sword'].indexOf(moveName) !== -1) return 'def';
+    return moveData.category === 'Physical' ? 'def' : 'spd';
+  }
+
+  // Intimidate (and what reacts to it). Returns text for the notes, or null if nothing happened.
+  var INTIMIDATE_IMMUNE = ['Clear Body', 'White Smoke', 'Hyper Cutter', 'Full Metal Body', 'Inner Focus', 'Own Tempo', 'Oblivious', 'Scrappy'];
+  function intimidate(srcSet, srcBoosts, tgtSet, tgtBoosts) {
+    var who = srcSet.species + '\'s Intimidate';
+    if (INTIMIDATE_IMMUNE.indexOf(tgtSet.ability) !== -1) return who + ' does nothing to ' + tgtSet.species + ' (' + tgtSet.ability + ').';
+    if (tgtSet.item === 'Clear Amulet') return who + ' does nothing to ' + tgtSet.species + ' (Clear Amulet).';
+    if (tgtSet.ability === 'Mirror Armor') { srcBoosts.atk = clampB(srcBoosts.atk - 1); return tgtSet.species + '\'s Mirror Armor reflects ' + who + ' back (' + srcSet.species + ' -1 Atk).'; }
+    var txt;
+    if (tgtSet.ability === 'Guard Dog') { tgtBoosts.atk = clampB(tgtBoosts.atk + 1); txt = who + ' triggers ' + tgtSet.species + '\'s Guard Dog (+1 Atk instead of a drop).'; }
+    else if (tgtSet.ability === 'Contrary') { tgtBoosts.atk = clampB(tgtBoosts.atk + 1); txt = who + ' raises ' + tgtSet.species + '\'s Atk by 1 (Contrary).'; }
+    else if (tgtSet.ability === 'Simple') { tgtBoosts.atk = clampB(tgtBoosts.atk - 2); txt = who + ' lowers ' + tgtSet.species + '\'s Atk by 2 (Simple).'; }
+    else {
+      tgtBoosts.atk = clampB(tgtBoosts.atk - 1); txt = who + ' lowers ' + tgtSet.species + '\'s Atk by 1.';
+      if (tgtSet.ability === 'Defiant') { tgtBoosts.atk = clampB(tgtBoosts.atk + 2); txt += ' Defiant then raises it by 2 (net +1).'; }
+      if (tgtSet.ability === 'Competitive') { tgtBoosts.spa = clampB(tgtBoosts.spa + 2); txt += ' Competitive then raises its SpA by 2.'; }
+      if (tgtSet.item === 'White Herb' && tgtBoosts.atk < 0) { tgtBoosts.atk = 0; txt += ' White Herb restores the drop.'; }
+    }
+    return txt;
+  }
+
+  function boostText(b) {
+    var out = [];
+    ['atk', 'def', 'spa', 'spd', 'spe'].forEach(function (k, i) {
+      if (b[k]) out.push((b[k] > 0 ? '+' : '') + b[k] + ' ' + ['Atk', 'Def', 'SpA', 'SpD', 'Spe'][i]);
+    });
+    return out.join(', ');
+  }
+  function hasBoosts(b) { return !!boostText(b); }
+
+  // Pick a boosting move from the set that raises the stat that matters, and "use" it 1-3 times.
+  function rollSelfBoost(set, relevantStat, rand, allowBellyDrum) {
+    var options = set.moves.filter(function (m) {
+      return BOOST_MOVES[m] && BOOST_MOVES[m][relevantStat] > 0 && (allowBellyDrum || m !== 'Belly Drum');
+    });
+    if (!options.length) return null;
+    var m = options[Math.floor(rand() * options.length)], r = rand();
+    var uses = ONE_USE[m] ? 1 : (r < 0.6 ? 1 : r < 0.92 ? 2 : 3);
+    var b = NEW_BOOSTS();
+    Object.keys(BOOST_MOVES[m]).forEach(function (k) { b[k] = clampB(BOOST_MOVES[m][k] * uses); });
+    return { move: m, uses: uses, boosts: b };
+  }
+
   // ---- Scenario --------------------------------------------------------------
   // opts: { alpha, field: bool (weather/terrain/screens/Helping Hand/Terastallization), rand }
   function buildScenario(opts) {
     opts = opts || {};
     var rand = opts.rand || Math.random, alpha = opts.alpha === undefined ? 0.5 : opts.alpha;
-    var useField = opts.field !== false;
+    var useField = opts.field !== false, useBoosts = opts.boosts !== false;
 
     for (var attempt = 0; attempt < 200; attempt++) {
       var aSet = pickSet(alpha, rand);
@@ -129,9 +195,31 @@
 
       var attacker, defender, move, result;
       try {
-        attacker = makeMon(aSet, aTera, aOn ? { abilityOn: true } : null);
-        defender = makeMon(dSet, dTera, dOn ? { abilityOn: true } : null);
         move = new C.Move(GEN, moveName, { ability: aSet.ability, item: aSet.item });
+        var aB = NEW_BOOSTS(), dB = NEW_BOOSTS(), boostNotes = [];
+        if (useBoosts) {
+          // 1) Intimidate has just activated (not every time, so plain matchups still come up)
+          if (aSet.ability === 'Intimidate' && rand() < 0.75) boostNotes.push(intimidate(aSet, aB, dSet, dB));
+          if (dSet.ability === 'Intimidate' && rand() < 0.75) boostNotes.push(intimidate(dSet, dB, aSet, aB));
+          // 2) setup moves that raise a stat this move actually uses
+          var off = offStat(moveName, { category: move.category });
+          var dfn = defStat(moveName, { category: move.category });
+          if (off && rand() < 0.55) {
+            var sb = rollSelfBoost(aSet, off, rand, true);
+            if (sb) { STAT_KEYS.slice(1).forEach(function (k) { aB[k] = clampB(aB[k] + sb.boosts[k]); });
+              boostNotes.push(aSet.species + ' used ' + sb.move + (sb.uses > 1 ? ' ' + sb.uses + ' times' : '') + ' (' + boostText(sb.boosts) + ').'); }
+          }
+          if (rand() < 0.4) {
+            var sd = rollSelfBoost(dSet, dfn, rand, false);
+            if (sd) { STAT_KEYS.slice(1).forEach(function (k) { dB[k] = clampB(dB[k] + sd.boosts[k]); });
+              boostNotes.push(dSet.species + ' used ' + sd.move + (sd.uses > 1 ? ' ' + sd.uses + ' times' : '') + ' (' + boostText(sd.boosts) + ').'); }
+          }
+        }
+        var aExtra = aOn ? { abilityOn: true } : {}, dExtra = dOn ? { abilityOn: true } : {};
+        if (hasBoosts(aB)) aExtra.boosts = aB;
+        if (hasBoosts(dB)) dExtra.boosts = dB;
+        attacker = makeMon(aSet, aTera, aExtra);
+        defender = makeMon(dSet, dTera, dExtra);
         result = C.calculate(GEN, attacker, defender, move, new C.Field(fieldOpts));
       } catch (e) { continue; }
 
@@ -141,8 +229,7 @@
 
       if (aOn) notes.push(aSet.species + '\'s ' + aSet.ability + ' is active.');
       if (dOn) notes.push(dSet.species + '\'s ' + dSet.ability + ' is active.');
-      if (aSet.ability === 'Intimidate') notes.push(aSet.species + ' just used Intimidate (the defender\'s Attack is lowered).');
-      if (dSet.ability === 'Intimidate') notes.push(dSet.species + ' just used Intimidate (the attacker\'s Attack is lowered).');
+      boostNotes.forEach(function (n) { notes.push(n); });
       var target = move.target;
       if (target === 'allAdjacentFoes' || target === 'allAdjacent') notes.push(moveName + ' hits both opponents, so the spread-move reduction applies.');
       if (move.hits > 1) notes.push(moveName + ' is assumed to hit ' + move.hits + ' times.');
@@ -151,7 +238,7 @@
       return {
         attacker: { set: aSet, tera: aTera, mon: attacker }, defender: { set: dSet, tera: dTera, mon: defender },
         move: moveName, moveData: move, field: { weather: weather, terrain: terrain, attackerSide: attackerSide, defenderSide: defenderSide },
-        notes: notes, result: result, lower: lo, upper: hi, hp: hp, desc: result.desc(),
+        notes: notes, boosts: { atk: aB, def: dB }, result: result, lower: lo, upper: hi, hp: hp, desc: result.desc(),
         rawCalc: result.desc().replace(/:\s*\d+-\d+\s*\(.*$/, ':')
       };
     }
@@ -173,7 +260,7 @@
     card.appendChild(el('strong', 'mon-name', s.species + (side.tera ? ' (Tera ' + s.tera + ')' : '')));
     var dl = el('dl', 'mon-facts');
     [['Item', s.item || '—'], ['Ability', s.ability || '—'], ['Nature', s.nature], ['EVs', evText(s)],
-      ['Type', side.mon.types.join(' / ')], ['Level', String(s.level)]].forEach(function (p) {
+      ['Type', side.mon.types.join(' / ')], ['Level', String(s.level)]].concat(hasBoosts(side.mon.boosts) ? [['Boosts', boostText(side.mon.boosts)]] : []).forEach(function (p) {
       dl.appendChild(el('dt', '', p[0]));
       dl.appendChild(el('dd', '', p[1]));
     });
@@ -199,7 +286,7 @@
 
   function newGame() {
     try {
-      state = buildScenario({ alpha: parseFloat($('variety').value), field: $('fieldFx').checked });
+      state = buildScenario({ alpha: parseFloat($('variety').value), field: $('fieldFx').checked, boosts: $('boostFx').checked });
     } catch (e) { say('Could not build a matchup, try again.', 'bad'); return; }
     guesses = 0; hints = 0; over = false;
     var cards = $('cards');
@@ -305,5 +392,5 @@
   });
 
   window.DouGame = { SETS: SETS, SPECIES: SPECIES, USAGE: DOU_USAGE, buildScenario: buildScenario, damagingMoves: damagingMoves,
-    speciesWeights: speciesWeights, resetRecent: function () { recent = []; }, _state: function () { return state; } };
+    speciesWeights: speciesWeights, intimidate: intimidate, NEW_BOOSTS: NEW_BOOSTS, resetRecent: function () { recent = []; }, _state: function () { return state; } };
 })();
