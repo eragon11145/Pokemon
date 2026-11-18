@@ -122,7 +122,7 @@
     $('reveal').hidden = false;
     $('round').textContent = 'Round ' + (i + 1) + ' of 6';
     $('revealText').textContent = puzzle[i].name + "'s " + STATS[i] + ' is ' + actual + '.';
-    $('revealGuess').textContent = 'You guessed ' + guess + ' — ' + Math.round(pct) + '% accurate';
+    $('revealGuess').textContent = 'You guessed ' + guess + ' — you scored ' + Math.round(pct);
     $('revealGuess').className = tierClass(pct);
     var bar = $('revealBar');
     bar.className = BAR_IDS[i];
