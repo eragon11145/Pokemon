@@ -151,7 +151,8 @@
       return {
         attacker: { set: aSet, tera: aTera, mon: attacker }, defender: { set: dSet, tera: dTera, mon: defender },
         move: moveName, moveData: move, field: { weather: weather, terrain: terrain, attackerSide: attackerSide, defenderSide: defenderSide },
-        notes: notes, result: result, lower: lo, upper: hi, hp: hp, desc: result.desc()
+        notes: notes, result: result, lower: lo, upper: hi, hp: hp, desc: result.desc(),
+        rawCalc: result.desc().replace(/:\s*\d+-\d+\s*\(.*$/, ':')
       };
     }
     throw new Error('Could not build a scenario');
@@ -209,11 +210,14 @@
     var notes = $('notes');
     notes.textContent = '';
     state.notes.forEach(function (n) { notes.appendChild(el('li', '', n)); });
+    $('rawCalc').textContent = state.rawCalc;
     $('question').textContent = 'What % of ' + state.defender.set.species + '\'s HP does ' + state.attacker.set.species + '\'s ' + state.move + ' do?';
     ['message', 'GuessNumber', 'Hinted', 'Answered', 'calcDesc'].forEach(function (id) { $(id).textContent = ' '; });
     $('message').className = '';
     $('scenario').hidden = false;
-    $('guessButtons').style.visibility = 'visible';
+    $('guessBarWrap').style.visibility = 'visible';
+    $('guessMarks').textContent = '';
+    $('rangeBand').hidden = true;
     $('answer').value = '';
     $('answer').focus();
   }
@@ -224,6 +228,7 @@
     if (correct) { stats.correct++; stats.streak++; stats.best = Math.max(stats.best, stats.streak); } else stats.streak = 0;
     renderStats();
     $('calcDesc').textContent = state.desc;
+    showBand();
   }
 
   function guess(value) {
@@ -234,6 +239,7 @@
     guesses++;
     $('GuessNumber').textContent = 'Number of Guesses: ' + guesses;
     $('answer').value = '';
+    addMark(g);
     if (g > state.lower - 0.7 && g < state.upper + 0.7) {
       say('Correct! The damage range was ' + fmt(state.lower) + '% to ' + fmt(state.upper) + '%.', 'good');
       finish(guesses === 1);
@@ -253,6 +259,7 @@
   function showAnswer() {
     if (!state) return;
     if (!over) { over = true; stats.played++; stats.streak = 0; renderStats(); }
+    showBand();
     $('Answered').textContent = 'Answer: ' + fmt(state.lower) + '% to ' + fmt(state.upper) + '%';
     $('calcDesc').textContent = state.desc;
   }
@@ -262,8 +269,39 @@
   $('btnHint').addEventListener('click', hint);
   $('btnAnswer').addEventListener('click', showAnswer);
   $('answer').addEventListener('keydown', function (e) { if (e.key === 'Enter') guess($('answer').value); });
-  Array.prototype.forEach.call(document.querySelectorAll('[data-pct]'), function (b) {
-    b.addEventListener('click', function () { guess(b.getAttribute('data-pct')); });
+  // ---- Click-the-bar guessing ----
+  var bar = $('guessBar'), kbd = 50;
+  function pctAt(clientX) {
+    var r = bar.getBoundingClientRect();
+    return Math.max(0, Math.min(100, Math.round((clientX - r.left) / r.width * 100)));
+  }
+  function showBand() {
+    var band = $('rangeBand');
+    band.hidden = false;
+    var lo = Math.max(0, state.lower), hi = Math.min(100, state.upper);
+    band.style.left = lo + '%';
+    band.style.width = Math.max(0.6, hi - lo) + '%';
+  }
+  function addMark(g) {
+    var m = el('span', 'guess-mark');
+    m.style.left = Math.min(100, g) + '%';
+    m.title = g + '%';
+    $('guessMarks').appendChild(m);
+  }
+  bar.addEventListener('pointermove', function (e) {
+    var p = pctAt(e.clientX), h = $('hoverMark');
+    h.hidden = false; h.style.left = p + '%'; $('hoverLabel').textContent = p + '%';
+  });
+  bar.addEventListener('pointerleave', function () { $('hoverMark').hidden = true; });
+  bar.addEventListener('click', function (e) { guess(String(pctAt(e.clientX))); });
+  bar.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') kbd = Math.max(0, kbd - (e.shiftKey ? 10 : 1));
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') kbd = Math.min(100, kbd + (e.shiftKey ? 10 : 1));
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); guess(String(kbd)); return; }
+    else return;
+    e.preventDefault();
+    bar.setAttribute('aria-valuenow', kbd);
+    var h = $('hoverMark'); h.hidden = false; h.style.left = kbd + '%'; $('hoverLabel').textContent = kbd + '%';
   });
 
   window.DouGame = { SETS: SETS, SPECIES: SPECIES, USAGE: DOU_USAGE, buildScenario: buildScenario, damagingMoves: damagingMoves,

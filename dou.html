@@ -58,29 +58,17 @@
       <p id="fieldLine" class="field-line"> </p>
       <ul id="notes" class="dou-notes"></ul>
       <h2 id="question" class="question"> </h2>
+      <p id="rawCalc" class="raw-calc"> </p>
     </section>
 
-    <div class="quick-guesses" id="guessButtons" style="visibility:hidden">
-      <button type="button" class="chip-btn" data-pct="5">5%</button>
-      <button type="button" class="chip-btn" data-pct="10">10%</button>
-      <button type="button" class="chip-btn" data-pct="15">15%</button>
-      <button type="button" class="chip-btn" data-pct="20">20%</button>
-      <button type="button" class="chip-btn" data-pct="25">25%</button>
-      <button type="button" class="chip-btn" data-pct="30">30%</button>
-      <button type="button" class="chip-btn" data-pct="35">35%</button>
-      <button type="button" class="chip-btn" data-pct="40">40%</button>
-      <button type="button" class="chip-btn" data-pct="45">45%</button>
-      <button type="button" class="chip-btn" data-pct="50">50%</button>
-      <button type="button" class="chip-btn" data-pct="55">55%</button>
-      <button type="button" class="chip-btn" data-pct="60">60%</button>
-      <button type="button" class="chip-btn" data-pct="65">65%</button>
-      <button type="button" class="chip-btn" data-pct="70">70%</button>
-      <button type="button" class="chip-btn" data-pct="75">75%</button>
-      <button type="button" class="chip-btn" data-pct="80">80%</button>
-      <button type="button" class="chip-btn" data-pct="85">85%</button>
-      <button type="button" class="chip-btn" data-pct="90">90%</button>
-      <button type="button" class="chip-btn" data-pct="95">95%</button>
-      <button type="button" class="chip-btn" data-pct="100">100%</button>
+    <div id="guessBarWrap" class="guess-bar-wrap" style="visibility:hidden">
+      <div id="guessBar" class="guess-bar" role="slider" tabindex="0" aria-label="Damage percent guess (click to guess)" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <div id="rangeBand" class="range-band" hidden></div>
+        <div id="hoverMark" class="hover-mark" hidden><span id="hoverLabel"></span></div>
+        <div id="guessMarks"></div>
+      </div>
+      <div class="bar-scale"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+      <p class="bar-help">Click or tap the bar to guess that % of the defender's HP (arrow keys + Enter also work).</p>
     </div>
 
     <section class="feedback" aria-live="polite">
