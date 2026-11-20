@@ -460,3 +460,22 @@ body:has(main.wide) .site-header { max-width: 860px; }
 .guess-mark { position: absolute; top: 4px; bottom: 4px; width: 4px; margin-left: -2px; background: var(--text); border-radius: 2px; pointer-events: none; box-shadow: 0 0 0 2px var(--surface); }
 .bar-scale { display: flex; justify-content: space-between; color: var(--muted); font-size: .75rem; margin-top: 4px; }
 .bar-help { margin: 4px 0 0; color: var(--muted); font-size: .8rem; }
+
+/* ---- Daily sort ---- */
+.lede { color: var(--muted); margin: 0 0 16px; }
+.sort-ends { margin: 0 0 6px; color: var(--muted); font-size: .85rem; font-weight: 700; }
+.sort-list { position: relative; list-style: none; margin: 0 0 8px; padding: 0; user-select: none; -webkit-user-select: none; touch-action: pan-y; }
+.sort-item { position: absolute; left: 0; right: 0; height: 48px; box-sizing: border-box; display: flex; align-items: center; gap: 10px; padding: 0 10px;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; cursor: grab; transition: top .15s ease, background .2s; }
+.sort-item.dragging { z-index: 5; cursor: grabbing; transition: none; box-shadow: var(--shadow); border-color: var(--accent); }
+.sort-item.locked { cursor: default; }
+.sort-item.right { background: color-mix(in srgb, var(--good) 28%, var(--surface-2)); border-color: var(--good); }
+.sort-item.wrong { background: color-mix(in srgb, var(--bad) 12%, var(--surface-2)); }
+.grip { color: var(--muted); font-size: 1.1rem; }
+.rank { width: 1.6em; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.sort-name { flex: 1 1 auto; font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sort-val { font-weight: 800; font-variant-numeric: tabular-nums; color: var(--accent); }
+.sort-btns { display: flex; gap: 4px; }
+.sort-btns button { padding: 2px 8px; font-size: .75rem; min-width: 0; }
+.attempts { color: var(--muted); font-weight: 600; }
+.verdict { text-align: center; font-weight: 700; margin: 0 0 12px; }
