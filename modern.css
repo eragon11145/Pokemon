@@ -479,3 +479,7 @@ body:has(main.wide) .site-header { max-width: 860px; }
 .sort-btns button { padding: 2px 8px; font-size: .75rem; min-width: 0; }
 .attempts { color: var(--muted); font-weight: 600; }
 .verdict { text-align: center; font-weight: 700; margin: 0 0 12px; }
+.tried { display: inline-flex; align-items: center; gap: 3px; color: var(--muted); font-size: .72rem; white-space: nowrap; }
+.tried-chip { padding: 1px 6px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); font-weight: 700; font-variant-numeric: tabular-nums; }
+.tried-chip.repeat { background: var(--bad); border-color: var(--bad); color: #fff; }
+.sort-item.locked .grip { font-size: .85rem; }

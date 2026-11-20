@@ -67,11 +67,27 @@
     var byName = {}; POOL.forEach(function (p) { byName[p.name] = p; });
     var restored = (saved.order || []).map(function (n) { return byName[n]; });
     if (restored.length === N && restored.every(Boolean)) order = restored;
-    history = saved.tries.filter(Array.isArray).slice(0, MAX_TRIES);
+    history = saved.tries.map(function (t) {
+      if (Array.isArray(t)) return { ok: t, order: null }; // older save format
+      return t && Array.isArray(t.ok) ? { ok: t.ok, order: Array.isArray(t.order) ? t.order : null } : null;
+    }).filter(Boolean).slice(0, MAX_TRIES);
   }
   function persist() { save(SAVE_KEY, { date: today, order: order.map(function (p) { return p.name; }), tries: history }); }
   function correctMap(ord) { return ord.map(function (p, i) { return p === puz.solution[i]; }); }
-  function lastCorrect() { return history.length ? history[history.length - 1] : null; }
+  function lastCorrect() { return history.length ? history[history.length - 1].ok : null; }
+  // A Pokémon that was in the right spot on the last submit is locked there for good.
+  function isLocked(i) { var c = lastCorrect(); return !!c && c[i] && order[i] === puz.solution[i]; }
+  function freeSlots() { var s = []; for (var i = 0; i < N; i++) if (!isLocked(i)) s.push(i); return s; }
+  // Spots each Pokémon has already been wrongly submitted in (1-based), from every earlier try.
+  function ruledOut(p) {
+    var out = [];
+    history.forEach(function (t) {
+      if (!t.order) return;
+      var i = t.order.indexOf(p.name);
+      if (i !== -1 && !t.ok[i] && out.indexOf(i + 1) === -1) out.push(i + 1);
+    });
+    return out.sort(function (a, b) { return a - b; });
+  }
   function isSolved() { var l = lastCorrect(); return !!l && l.every(Boolean); }
 
   // ---- Rendering -----------------------------------------------------------
@@ -85,6 +101,7 @@
       var grip = document.createElement('span'); grip.className = 'grip'; grip.textContent = '⠿'; grip.setAttribute('aria-hidden', 'true');
       var rank = document.createElement('span'); rank.className = 'rank';
       var name = document.createElement('span'); name.className = 'sort-name'; name.textContent = p.name;
+      var tried = document.createElement('span'); tried.className = 'tried';
       var val = document.createElement('span'); val.className = 'sort-val'; val.hidden = true;
       var btns = document.createElement('span'); btns.className = 'sort-btns';
       var up = document.createElement('button'); up.type = 'button'; up.textContent = '▲'; up.setAttribute('aria-label', 'Move ' + p.name + ' up');
@@ -92,7 +109,7 @@
       up.addEventListener('click', function () { move(p, -1); });
       dn.addEventListener('click', function () { move(p, 1); });
       btns.appendChild(up); btns.appendChild(dn);
-      [grip, rank, name, val, btns].forEach(function (e) { li.appendChild(e); });
+      [grip, rank, name, tried, val, btns].forEach(function (e) { li.appendChild(e); });
       li.addEventListener('pointerdown', function (e) { startDrag(e, p, li); });
       list.appendChild(li);
       items[p.name] = li;
@@ -108,14 +125,27 @@
     });
   }
   function colour() {
-    var c = done || history.length ? lastCorrect() : null;
+    var c = history.length ? lastCorrect() : null;
     order.forEach(function (p, i) {
-      var li = items[p.name];
+      var li = items[p.name], locked = done || isLocked(i);
       li.classList.remove('right', 'wrong');
-      // colours describe the order that was submitted; once the player moves things again they go neutral
-      if (c && submittedKey === orderKey()) li.classList.add(c[i] ? 'right' : 'wrong');
-      li.querySelector('.sort-btns').hidden = done;
-      li.classList.toggle('locked', done);
+      if (locked) li.classList.add('right');
+      else if (c && submittedKey === orderKey()) li.classList.add('wrong');
+      li.classList.toggle('locked', locked);
+      li.querySelector('.sort-btns').hidden = locked;
+      li.querySelector('.grip').textContent = locked ? '🔒' : '⠿';
+      var t = li.querySelector('.tried'), r = done ? [] : ruledOut(p);
+      t.textContent = '';
+      if (r.length && !locked) {
+        t.appendChild(document.createTextNode('not '));
+        r.forEach(function (n) {
+          var chip = document.createElement('span');
+          chip.className = 'tried-chip' + (n === i + 1 ? ' repeat' : '');
+          chip.textContent = n;
+          chip.title = n === i + 1 ? 'You already tried this spot' : 'Tried spot ' + n;
+          t.appendChild(chip);
+        });
+      }
     });
   }
   var submittedKey = '';
@@ -127,11 +157,15 @@
   }
 
   // ---- Moving --------------------------------------------------------------
+  // Reorder only the unlocked Pokémon; locked ones keep their slots.
+  function placeFree(freeItems, slots) { freeItems.forEach(function (p, k) { order[slots[k]] = p; }); }
   function move(p, delta) {
     if (done) return;
-    var i = order.indexOf(p), j = i + delta;
-    if (j < 0 || j >= N) return;
-    order.splice(i, 1); order.splice(j, 0, p);
+    var slots = freeSlots(), free = slots.map(function (s) { return order[s]; });
+    var k = free.indexOf(p), k2 = k + delta;
+    if (k === -1 || k2 < 0 || k2 >= free.length) return;
+    free.splice(k, 1); free.splice(k2, 0, p);
+    placeFree(free, slots);
     afterMove(); render();
     var btn = items[p.name].querySelectorAll('button')[delta < 0 ? 0 : 1]; if (btn) btn.focus();
   }
@@ -139,7 +173,7 @@
 
   var drag = null;
   function startDrag(e, p, li) {
-    if (done || e.target.closest('button') || (e.button !== undefined && e.button !== 0)) return;
+    if (done || isLocked(order.indexOf(p)) || e.target.closest('button') || (e.button !== undefined && e.button !== 0)) return;
     var rect = list.getBoundingClientRect();
     drag = { p: p, li: li, startY: e.clientY, startTop: order.indexOf(p) * ROW, rectTop: rect.top, moved: false, id: e.pointerId };
     try { li.setPointerCapture(e.pointerId); } catch (x) { /* ignore */ }
@@ -152,9 +186,10 @@
     y = Math.max(0, Math.min((N - 1) * ROW, y));
     if (Math.abs(e.clientY - drag.startY) > 3) drag.moved = true;
     drag.li.style.top = y + 'px';
-    var target = Math.max(0, Math.min(N - 1, Math.round(y / ROW)));
-    var cur = order.indexOf(drag.p);
-    if (target !== cur) { order.splice(cur, 1); order.splice(target, 0, drag.p); layout(drag.p); drag.li.style.top = y + 'px'; }
+    var slots = freeSlots(), free = slots.map(function (s) { return order[s]; });
+    var cur = free.indexOf(drag.p), best = 0;
+    slots.forEach(function (s, k) { if (Math.abs(s * ROW - y) < Math.abs(slots[best] * ROW - y)) best = k; });
+    if (best !== cur) { free.splice(cur, 1); free.splice(best, 0, drag.p); placeFree(free, slots); layout(drag.p); drag.li.style.top = y + 'px'; }
   });
   function endDrag() {
     if (!drag) return;
@@ -169,8 +204,10 @@
   // ---- Submit / finish -----------------------------------------------------
   function submit() {
     if (done) return;
+    var prev = history.length ? history[history.length - 1].order : null;
+    if (prev && prev.join('|') === orderKey()) { $('message').textContent = 'Move something first — that exact order was already tried.'; return; }
     var c = correctMap(order);
-    history.push(c);
+    history.push({ ok: c, order: order.map(function (p) { return p.name; }) });
     submittedKey = orderKey();
     persist();
     var n = c.filter(Boolean).length;
@@ -180,7 +217,7 @@
   }
   function finalScore() { var c = lastCorrect(); return score(c.filter(Boolean).length, c.every(Boolean), history.length); }
   function shareText() {
-    var rows = history.map(function (c) { return c.map(function (x) { return x ? '🟩' : '⬛'; }).join(''); }).join('\n');
+    var rows = history.map(function (t) { return t.ok.map(function (x) { return x ? '🟩' : '⬛'; }).join(''); }).join('\n');
     return 'Pokémon Daily Sort #' + dayNumber(today) + ' (' + STATS[puz.stat] + ')\n' + finalScore() + '/100  ' + history.length + '/' + MAX_TRIES + '\n' + rows + '\n' +
       location.href.split('?')[0].replace(/[^/]*$/, 'sort.html');
   }
